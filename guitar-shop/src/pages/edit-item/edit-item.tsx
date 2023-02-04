@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function EditItem(): JSX.Element {
   return (
     <main className="page-content">
@@ -5,11 +7,14 @@ function EditItem(): JSX.Element {
         <div className="container">
           <h1 className="edit-item__title">СURT Z30 Plus</h1>
           <ul className="breadcrumbs">
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Каталог</Link>
             </li>
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Товары</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Товары</Link>
             </li>
-            <li className="breadcrumbs__item"><a className="link">СURT Z30 Plus</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">СURT Z30 Plus</Link>
             </li>
           </ul>
           <form className="edit-item__form" action="#" method="get">
@@ -69,8 +74,10 @@ function EditItem(): JSX.Element {
               </div>
               <div className="custom-textarea edit-item__form-textarea">
                 <label><span>Описание товара</span>
-                  <textarea name="description" placeholder="">Гитара подходит как для старта обучения, так и для домашних занятий или использования в полевых условиях, например, в походах или для проведения уличных выступлений.
-      тупная стоимость, качество и надежная конструкция, а также приятный внешний вид, который сделает вас звездой вечеринки.</textarea>
+                  <textarea name="description" placeholder="">
+                    Гитара подходит как для старта обучения, так и для домашних занятий или использования в полевых условиях, например, в походах или для проведения уличных выступлений.
+ Доступная стоимость, качество и надежная конструкция, а также приятный внешний вид, который сделает вас звездой вечеринки.
+                  </textarea>
                 </label>
                 <p>Заполните поле</p>
               </div>

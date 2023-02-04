@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function ProductList(): JSX.Element {
   return (
     <main className="page-content">
@@ -5,9 +7,11 @@ function ProductList(): JSX.Element {
         <div className="container">
           <h1 className="product-list__title">Список товаров</h1>
           <ul className="breadcrumbs">
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Каталог</Link>
             </li>
-            <li className="breadcrumbs__item"><a className="link">Товары</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Товары</Link>
             </li>
           </ul>
           <div className="catalog">
@@ -64,7 +68,8 @@ function ProductList(): JSX.Element {
             <div className="catalog-cards">
               <ul className="catalog-cards__list">
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -89,12 +94,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -119,12 +126,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -149,12 +158,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -179,12 +190,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -209,12 +222,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -239,12 +254,14 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
                 <li className="catalog-item">
-                  <div className="catalog-item__data"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
+                  <div className="catalog-item__data">
+                    <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="36" height="93" alt="Картинка гитары"/>
                     <div className="catalog-item__data-wrapper">
                       <p className="catalog-item__data-title">ЭлектроГитара Честер bass</p>
                       <div className="rate catalog-item__data-rate">
@@ -269,7 +286,8 @@ function ProductList(): JSX.Element {
                       <p className="catalog-item__data-price">17 500 ₽</p>
                     </div>
                   </div>
-                  <div className="catalog-item__buttons"><a className="button button--small button--black-border" href="edit-item.html" aria-label="Редактировать товар">Редактировать</a>
+                  <div className="catalog-item__buttons">
+                    <Link className="button button--small button--black-border" to="/edit-item" aria-label="Редактировать товар">Редактировать</Link>
                     <button className="button button--small button--black-border" type="submit" aria-label="Удалить товар">Удалить</button>
                   </div>
                 </li>
@@ -279,13 +297,17 @@ function ProductList(): JSX.Element {
           <button className="button product-list__button button--red button--big">Добавить новый товар</button>
           <div className="pagination product-list__pagination">
             <ul className="pagination__list">
-              <li className="pagination__page pagination__page--active"><a className="link pagination__page-link" href="1">1</a>
+              <li className="pagination__page pagination__page--active">
+                <Link className="link pagination__page-link" to="1">1</Link>
               </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="2">2</a>
+              <li className="pagination__page">
+                <Link className="link pagination__page-link" to="2">2</Link>
               </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="3">3</a>
+              <li className="pagination__page">
+                <Link className="link pagination__page-link" to="3">3</Link>
               </li>
-              <li className="pagination__page pagination__page--next" id="next"><a className="link pagination__page-link" href="2">Далее</a>
+              <li className="pagination__page pagination__page--next" id="next">
+                <Link className="link pagination__page-link" to="2">Далее</Link>
               </li>
             </ul>
           </div>

@@ -1,14 +1,19 @@
+import { Link } from 'react-router-dom';
+
 function Cart(): JSX.Element {
   return (
     <main className="page-content">
       <div className="container">
         <h1 className="title title--bigger page-content__title">Корзина</h1>
         <ul className="breadcrumbs page-content__breadcrumbs page-content__breadcrumbs--on-cart-page">
-          <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
+          <li className="breadcrumbs__item">
+            <Link className="link" to="/">Главная</Link>
           </li>
-          <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
+          <li className="breadcrumbs__item">
+            <Link className="link" to="/">Каталог</Link>
           </li>
-          <li className="breadcrumbs__item"><a className="link">Корзина</a>
+          <li className="breadcrumbs__item">
+            <Link className="link" to="/">Корзина</Link>
           </li>
         </ul>
         <div className="cart">

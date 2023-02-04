@@ -1,12 +1,16 @@
+import { Link } from 'react-router-dom';
+
 function Main(): JSX.Element {
   return (
     <main className="page-content">
       <div className="container">
         <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
         <ul className="breadcrumbs page-content__breadcrumbs">
-          <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
+          <li className="breadcrumbs__item">
+            <Link className="link" to="/">Главная</Link>
           </li>
-          <li className="breadcrumbs__item"><a className="link">Каталог</a>
+          <li className="breadcrumbs__item">
+            <Link className="link" to="/">Каталог</Link>
           </li>
         </ul>
         <div className="catalog">
@@ -98,7 +102,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>10 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="75" height="190" alt="Честер Bass"/>
@@ -126,7 +132,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>17 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red-border button--mini button--in-cart" href="#">В Корзине</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red-border button--mini button--in-cart" to="/cart">В Корзине</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-2.png" srcSet="img/content/catalog-product-2@2x.png 2x" width="75" height="190" alt="Roman RX"/>
@@ -154,7 +162,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>4 800 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-3.png" srcSet="img/content/catalog-product-3@2x.png 2x" width="75" height="190" alt="Liana Z100"/>
@@ -182,7 +192,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>10 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-4.png" srcSet="img/content/catalog-product-4@2x.png 2x" width="75" height="190" alt="Roman RX"/>
@@ -210,7 +222,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>4 800 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-5.png" srcSet="img/content/catalog-product-5@2x.png 2x" width="75" height="190" alt="Честер Bass"/>
@@ -238,7 +252,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>17 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red-border button--mini button--in-cart" href="#">В Корзине</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red-border button--mini button--in-cart" to="/cart">В Корзине</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-6.png" srcSet="img/content/catalog-product-6@2x.png 2x" width="75" height="190" alt="Честер Bass"/>
@@ -266,7 +282,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>17 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red-border button--mini button--in-cart" href="#">В Корзине</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red-border button--mini button--in-cart" to="/cart">В Корзине</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-7.png" srcSet="img/content/catalog-product-7@2x.png 2x" width="75" height="190" alt="Liana Z100"/>
@@ -294,7 +312,9 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>10 500 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
             <div className="product-card"><img src="img/content/catalog-product-8.png" srcSet="img/content/catalog-product-8@2x.png 2x" width="75" height="190" alt="Roman RX"/>
@@ -322,19 +342,25 @@ function Main(): JSX.Element {
                 <p className="product-card__price"><span className="visually-hidden">Цена:</span>4 800 ₽
                 </p>
               </div>
-              <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+              <div className="product-card__buttons">
+                <Link className="button button--mini" to="/product">Подробнее</Link>
+                <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
               </div>
             </div>
           </div>
           <div className="pagination page-content__pagination">
             <ul className="pagination__list">
-              <li className="pagination__page pagination__page--active"><a className="link pagination__page-link" href="1">1</a>
+              <li className="pagination__page pagination__page--active">
+                <Link className="link pagination__page-link" to="1">1</Link>
               </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="2">2</a>
+              <li className="pagination__page">
+                <Link className="link pagination__page-link" to="2">2</Link>
               </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="3">3</a>
+              <li className="pagination__page">
+                <Link className="link pagination__page-link" to="3">3</Link>
               </li>
-              <li className="pagination__page pagination__page--next" id="next"><a className="link pagination__page-link" href="2">Далее</a>
+              <li className="pagination__page pagination__page--next" id="next">
+                <Link className="link pagination__page-link" to="2">Далее</Link>
               </li>
             </ul>
           </div>

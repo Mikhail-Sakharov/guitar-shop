@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function AddItem(): JSX.Element {
   return (
     <main className="page-content">
@@ -5,11 +7,14 @@ function AddItem(): JSX.Element {
         <div className="container">
           <h1 className="add-item__title">Новый товар</h1>
           <ul className="breadcrumbs">
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Каталог</Link>
             </li>
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Товары</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Товары</Link>
             </li>
-            <li className="breadcrumbs__item"><a className="link">Новый товар</a>
+            <li className="breadcrumbs__item">
+              <Link className="link" to="/">Новый товар</Link>
             </li>
           </ul>
           <form className="add-item__form" action="#" method="get">

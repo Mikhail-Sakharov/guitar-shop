@@ -27,7 +27,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route index element={<Main />}/>
           <Route
-            path={AppRoute.Login} 
+            path={AppRoute.Login}
             element={
               authorizationStatus !== AuthorizationStatus.Auth
                 ? <Login />
