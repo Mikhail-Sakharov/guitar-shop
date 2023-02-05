@@ -14,6 +14,8 @@ class ProductDto { // TODO: перенести в типы
   public reviewsCount!: number;
 }
 
+const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично']; // TODO: перенести в константы
+
 const maxRatingStarsCount = 5; // TODO: перенести в константы
 
 type ProductCardProps = {
@@ -23,11 +25,11 @@ type ProductCardProps = {
 function ProductCard({product}: ProductCardProps) {
   return (
     <div className="product-card">
-      <img src={product.image} srcSet="img/content/catalog-product-0@2x.png 2x" width="75" height="190" alt="Liana Z100"/>
+      <img src={product.image} srcSet="img/content/catalog-product-0@2x.png 2x" width="75" height="190" alt={product.title}/>
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {
-            Array.from({length: maxRatingStarsCount}, (_item, index) => index).map((starPosition) => (
+            Array.from({length: maxRatingStarsCount}, (_item, index) => index + 1).map((starPosition) => (
               starPosition <= product.rating
                 ? (
                   <svg key={starPosition} width="12" height="11" aria-hidden="true">
@@ -41,17 +43,17 @@ function ProductCard({product}: ProductCardProps) {
                 )
             ))
           }
-          <p className="visually-hidden">Рейтинг: Хорошо</p> {/* нужны данные? */}
+          <p className="visually-hidden">Рейтинг: {ratings[product.rating]}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{product.reviewsCount}</p>
         </div>
         <p className="product-card__title">{product.title}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>{product.price}
+          <span className="visually-hidden">Цена:</span>{`${product.price} ₽`} {/* форматировать цену */}
         </p>
       </div>
       <div className="product-card__buttons">
         <Link className="button button--mini" to="/product">Подробнее</Link>
-        <Link className="button button--red button--mini button--add-to-cart" to="/cart">Купить</Link>
+        <Link className="button button--red button--mini button--add-to-cart" to="/">Купить</Link>
       </div>
     </div>
   );

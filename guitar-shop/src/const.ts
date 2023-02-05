@@ -2,12 +2,12 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Registration = '/registration',
-  Product = '/product', // /product/:id
+  Product = '/product/:id', // /product/:id
   Products = '/products',
   Cart = '/cart',
   AddItem = '/add-item',
   EditItem = '/edit-item',
-  Order = '/order', // /order/:id
+  Order = '/order/:id', // /order/:id
   Orders = '/orders',
   NotFound = '*'
 }
