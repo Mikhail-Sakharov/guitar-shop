@@ -1,9 +1,11 @@
+import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {products as data} from '../../components/app/app';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
 
 function Product(): JSX.Element {
+  const [isCharacteristics, setIsCharacteristics] = useState(false);
   const productId = Number(useParams().id);
   const product = data.find((item) => item.id === productId);
 
@@ -39,10 +41,10 @@ function Product(): JSX.Element {
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{product?.reviewsCount}</p>
             </div>
             <div className="tabs">
-              <Link className="button button--medium tabs__button" to="#characteristics">Характеристики</Link>
-              <Link className="button button--black-border button--medium tabs__button" to="#description">Описание</Link>
+              <Link onClick={() => setIsCharacteristics(false)} className={`button button--medium tabs__button ${isCharacteristics ? 'button--black-border' : ''}`} to="#characteristics">Характеристики</Link>
+              <Link onClick={() => setIsCharacteristics(true)} className={`button button--medium tabs__button ${isCharacteristics ? '' : 'button--black-border'}`} to="#description">Описание</Link>
               <div className="tabs__content" id="characteristics">
-                <table className="tabs__table">
+                <table className={`tabs__table ${isCharacteristics ? 'hidden' : ''}`}>
                   <tr className="tabs__table-row">
                     <td className="tabs__title">Артикул:</td>
                     <td className="tabs__value">{product?.sku}</td>
@@ -56,7 +58,7 @@ function Product(): JSX.Element {
                     <td className="tabs__value">{product?.stringsCount} струнная</td>
                   </tr>
                 </table>
-                <p className="tabs__product-description hidden">{product?.description}</p>
+                <p className={`tabs__product-description ${isCharacteristics ? '' : 'hidden'}`}>{product?.description}</p>
               </div>
             </div>
           </div>

@@ -1,19 +1,22 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {AppRoute, AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {ProductDto} from '../../types/product.dto';
+import {useAppSelector} from '../app/app';
 
-type AddToCartModalState = {
+type MainPageState = {
   isAddToCartModalOpened: boolean;
-  isSuccessAddModalOpened: boolean;
+  isEnterModalOpened?: boolean;
   product: ProductDto | null;
 };
 
 type ProductCardProps = {
   product: ProductDto;
-  setAddToCartModalState: (state: AddToCartModalState) => void;
+  setMainPageState: (state: MainPageState) => void;
 };
 
-function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
+function ProductCard({product, setMainPageState}: ProductCardProps) {
+  const authorizationStatus = useAppSelector();
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   return (
     <div className="product-card">
@@ -41,7 +44,13 @@ function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
           to=""
           /* меняем класс, если товар в корзине */
           className="button button--red button--mini button--add-to-cart"
-          onClick={() => setAddToCartModalState({isAddToCartModalOpened: true, isSuccessAddModalOpened: false, product})}
+          onClick={
+            () => setMainPageState({
+              isAddToCartModalOpened: isUserAuthorized,
+              isEnterModalOpened: !isUserAuthorized,
+              product: isUserAuthorized ? product : null
+            })
+          }
         >Купить
         </Link>
       </div>

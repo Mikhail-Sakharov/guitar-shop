@@ -1,6 +1,6 @@
 import {ProductDto} from '../../../types/product.dto';
 
-type AddToCartModalState = {
+type MainPageState = {
   isAddToCartModalOpened: boolean;
   isSuccessAddModalOpened: boolean;
   product: ProductDto | null;
@@ -8,16 +8,16 @@ type AddToCartModalState = {
 
 type AddToCartModalProps = {
   product: ProductDto | null;
-  setAddToCartModalState: (state: AddToCartModalState) => void;
+  setMainPageState: (state: MainPageState) => void;
 };
 
-function AddToCartModal({product, setAddToCartModalState}: AddToCartModalProps): JSX.Element {
+function AddToCartModal({product, setMainPageState}: AddToCartModalProps): JSX.Element {
 
   const handleAddButtonClick = () => {
-    setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null});
+    setMainPageState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null});
     // await диспатч асинх действия добавления в корзину
     // обновить состояние корзины (перейдёт в асинх диспатч)
-    setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: true, product: null});
+    setMainPageState({isAddToCartModalOpened: false, isSuccessAddModalOpened: true, product: null});
   };
 
   return (
@@ -40,9 +40,25 @@ function AddToCartModal({product, setAddToCartModalState}: AddToCartModalProps):
               </div>
             </div>
             <div className="modal__button-container">
-              <button onClick={handleAddButtonClick} className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
+              <button
+                className="button button--red button--big modal__button modal__button--add"
+                onClick={handleAddButtonClick}
+              >
+                Добавить в корзину
+              </button>
             </div>
-            <button onClick={() => setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null})} className="modal__close-btn button-cross" type="button" aria-label="Закрыть"><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
+            <button
+              className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
+              onClick={
+                () => setMainPageState({
+                  isAddToCartModalOpened: false,
+                  isSuccessAddModalOpened: false,
+                  product: null
+                })
+              }
+            >
+              <span className="button-cross__icon"></span>
+              <span className="modal__close-btn-interactive-area"></span>
             </button>
           </div>
         </div>

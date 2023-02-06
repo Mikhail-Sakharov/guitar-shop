@@ -17,7 +17,7 @@ import PrivateRoute from '../private-route/private-route';
 
 export const products = getProducts();
 
-function useAppSelector() {
+export function useAppSelector() {
   return AuthorizationStatus.Auth;
 }
 
