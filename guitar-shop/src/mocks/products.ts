@@ -1,4 +1,4 @@
-const getRandom = (min: number, max: number) => {
+export const getRandom = (min: number, max: number) => {
   [min, max] = [Math.abs(min), Math.abs(max)];
   if (max < min) {[min, max] = [max, min];}
   return Math.round(min + (max - min) * Math.random());
@@ -9,7 +9,7 @@ const guitarTypes = ['электро', 'аккустика', 'укулеле'];
 const stringsCounts = [4, 6, 7, 12];
 
 export const getProducts = () => Array.from({length: 9}, () => ({
-  id: Number(new Date()),
+  id: Number(new Date()) * getRandom(0, 5) + getRandom(0, 99),
   title: titles[getRandom(0, 2)],
   description: 'Гитара подходит как для старта обучения, так и для домашних занятий или использования в полевых условиях, например, в походах или для проведения уличных выступлений. Доступная стоимость, качество и надежная конструкция, а также приятный внешний вид, который сделает вас звездой вечеринки.',
   createdAt: new Date().toISOString(),

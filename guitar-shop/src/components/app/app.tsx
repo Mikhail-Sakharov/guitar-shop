@@ -45,7 +45,7 @@ function App(): JSX.Element {
                 : <Navigate to={AppRoute.Main}/>
             }
           />
-          <Route path={AppRoute.Product} element={<Product />}/>
+          <Route path={AppRoute.ProductId} element={<Product />}/>
           <Route path={AppRoute.Products} element={<ProductList />}/>
           <Route
             path={AppRoute.Cart}

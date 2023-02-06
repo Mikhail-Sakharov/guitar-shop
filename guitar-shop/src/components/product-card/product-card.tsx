@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {AppRoute, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {ProductDto} from '../../types/product.dto';
 
 type AddToCartModalState = {
@@ -17,7 +17,7 @@ function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
 
   return (
     <div className="product-card">
-      <img src={product.image} srcSet="img/content/catalog-product-0@2x.png 2x" width="75" height="190" alt={product.title}/>
+      <img src={product.image} /* srcSet={product ? `${product?.image} 2x` : ''} */ width="75" height="190" alt={product.title}/>
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {
@@ -36,7 +36,7 @@ function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
         </p>
       </div>
       <div className="product-card__buttons">
-        <Link className="button button--mini" to="/product/1">Подробнее</Link>
+        <Link className="button button--mini" to={`${AppRoute.Product}/${product.id}`}>Подробнее</Link>
         <Link
           to=""
           /* меняем класс, если товар в корзине */

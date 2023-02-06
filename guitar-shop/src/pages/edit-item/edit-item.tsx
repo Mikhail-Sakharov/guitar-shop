@@ -31,13 +31,13 @@ function EditItem(): JSX.Element {
               <div className="input-radio edit-item__form-radio"><span>Тип товара</span>
                 <input type="radio" id="guitar" name="item-type" value="guitar"/>
                 <label htmlFor="guitar">Акустическая гитара</label>
-                <input type="radio" id="el-guitar" name="item-type" value="el-guitar" checked/>
+                <input type="radio" id="el-guitar" name="item-type" value="el-guitar"/>
                 <label htmlFor="el-guitar">Электрогитара</label>
                 <input type="radio" id="ukulele" name="item-type" value="ukulele"/>
                 <label htmlFor="ukulele">Укулеле</label>
               </div>
               <div className="input-radio edit-item__form-radio"><span>Количество струн</span>
-                <input type="radio" id="string-qty-4" name="string-qty" value="4" checked/>
+                <input type="radio" id="string-qty-4" name="string-qty" value="4"/>
                 <label htmlFor="string-qty-4">4</label>
                 <input type="radio" id="string-qty-6" name="string-qty" value="6"/>
                 <label htmlFor="string-qty-6">6</label>

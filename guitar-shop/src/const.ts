@@ -2,7 +2,8 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Registration = '/registration',
-  Product = '/product/:id', // /product/:id
+  Product = '/product',
+  ProductId = '/product/:id',
   Products = '/products',
   Cart = '/cart',
   AddItem = '/add-item',
