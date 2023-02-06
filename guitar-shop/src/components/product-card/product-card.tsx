@@ -18,11 +18,17 @@ const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Н�
 
 const maxRatingStarsCount = 5; // TODO: перенести в константы
 
-type ProductCardProps = {
-  product: ProductDto;
+type AddToCartModalState = {
+  isOpened: boolean;
+  product: ProductDto | null;
 };
 
-function ProductCard({product}: ProductCardProps) {
+type ProductCardProps = {
+  product: ProductDto;
+  setAddToCartModalState: (state: AddToCartModalState) => void;
+};
+
+function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
   return (
     <div className="product-card">
       <img src={product.image} srcSet="img/content/catalog-product-0@2x.png 2x" width="75" height="190" alt={product.title}/>
@@ -30,17 +36,9 @@ function ProductCard({product}: ProductCardProps) {
         <div className="rate product-card__rate">
           {
             Array.from({length: maxRatingStarsCount}, (_item, index) => index + 1).map((starPosition) => (
-              starPosition <= product.rating
-                ? (
-                  <svg key={starPosition} width="12" height="11" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"></use>
-                  </svg>
-                )
-                : (
-                  <svg key={starPosition} width="12" height="11" aria-hidden="true">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                )
+              <svg key={starPosition} width="12" height="11" aria-hidden="true">
+                <use xlinkHref={starPosition <= product.rating ? '#icon-full-star' : '#icon-star'}></use>
+              </svg>
             ))
           }
           <p className="visually-hidden">Рейтинг: {ratings[product.rating]}</p>
@@ -48,12 +46,13 @@ function ProductCard({product}: ProductCardProps) {
         </div>
         <p className="product-card__title">{product.title}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>{`${product.price} ₽`} {/* форматировать цену */}
+          <span className="visually-hidden">Цена:</span>{`${product.price.toLocaleString()} ₽`}
         </p>
       </div>
       <div className="product-card__buttons">
         <Link className="button button--mini" to="/product">Подробнее</Link>
-        <Link className="button button--red button--mini button--add-to-cart" to="/">Купить</Link>
+        {/* меняем класс, если товар в корзине */}
+        <Link className="button button--red button--mini button--add-to-cart" to="/" onClick={() => setAddToCartModalState({isOpened: true, product})}>Купить</Link>
       </div>
     </div>
   );
