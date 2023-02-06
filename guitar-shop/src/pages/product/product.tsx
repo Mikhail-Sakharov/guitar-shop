@@ -1,5 +1,6 @@
 import {Link, useParams} from 'react-router-dom';
 import {products as data} from '../../components/app/app';
+import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
 
 function Product(): JSX.Element {
@@ -65,104 +66,7 @@ function Product(): JSX.Element {
             <Link className="button button--red button--big product-container__button" to="#">Добавить в корзину</Link>
           </div>
         </div>
-        <section className="reviews"> {/* добавить моки и отрисовать динамически */}
-          <h3 className="reviews__title title title--bigger">Отзывы</h3>
-          <Link className="button button--red-border button--big reviews__sumbit-button" to="#">Оставить отзыв</Link>
-          <div className="review">
-            <div className="review__wrapper">
-              <h4 className="review__title review__title--author title title--lesser">Иванов Максим</h4>
-              <span className="review__date">12 декабря</span>
-            </div>
-            <div className="rate review__rating-panel">
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-              <p className="visually-hidden">Оценка: Хорошо</p>
-            </div>
-            <h4 className="review__title title title--lesser">Достоинства:</h4>
-            <p className="review__value">Хороший корпус, чистый звук, стурны хорошего качества</p>
-            <h4 className="review__title title title--lesser">Недостатки:</h4>
-            <p className="review__value">Тугие колонки</p>
-            <h4 className="review__title title title--lesser">Комментарий:</h4>
-            <p className="review__value">У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня.</p>
-          </div>
-          <div className="review">
-            <div className="review__wrapper">
-              <h4 className="review__title review__title--author title title--lesser">Перова Ольга</h4>
-              <span className="review__date">12 декабря</span>
-            </div>
-            <div className="rate review__rating-panel">
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-              <p className="visually-hidden">Оценка: Хорошо</p>
-            </div>
-            <h4 className="review__title title title--lesser">Достоинства:</h4>
-            <p className="review__value">Хороший корпус, чистый звук, стурны хорошего качества</p>
-            <h4 className="review__title title title--lesser">Недостатки:</h4>
-            <p className="review__value">Тугие колонки</p>
-            <h4 className="review__title title title--lesser">Комментарий:</h4>
-            <p className="review__value">У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. </p>
-          </div>
-          <div className="review">
-            <div className="review__wrapper">
-              <h4 className="review__title review__title--author title title--lesser">Преображенская  Ксения</h4>
-              <span className="review__date">12 декабря</span>
-            </div>
-            <div className="rate review__rating-panel">
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-              <p className="visually-hidden">Оценка: Хорошо</p>
-            </div>
-            <h4 className="review__title title title--lesser">Достоинства:</h4>
-            <p className="review__value">Хороший корпус, чистый звук, стурны хорошего качества</p>
-            <h4 className="review__title title title--lesser">Недостатки:</h4>
-            <p className="review__value">Тугие колонки</p>
-            <h4 className="review__title title title--lesser">Комментарий:</h4>
-            <p className="review__value">
-              У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня.
-            </p>
-          </div>
-          <button className="button button--medium reviews__more-button">Показать еще отзывы</button>
-          <Link className="button button--up button--red-border button--big reviews__up-button" to="#header">Наверх</Link>
-        </section>
+        <ReviewsSection />
       </div>
     </main>
   );

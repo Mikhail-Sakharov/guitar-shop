@@ -1,8 +1,4 @@
-export const getRandom = (min: number, max: number) => {
-  [min, max] = [Math.abs(min), Math.abs(max)];
-  if (max < min) {[min, max] = [max, min];}
-  return Math.round(min + (max - min) * Math.random());
-};
+import {getRandom} from '../helpers';
 
 const titles = ['Liana Z100', 'Честер Bass', 'Roman RX'];
 const guitarTypes = ['электро', 'аккустика', 'укулеле'];
