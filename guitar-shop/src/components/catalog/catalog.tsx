@@ -1,22 +1,10 @@
-import {getProducts} from '../../mocks/products';
 import ProductCard from '../product-card/product-card';
-
-class ProductDto { // TODO: перенести в типы
-  public id!: number;
-  public title!: string;
-  public description!: string;
-  public createdAt!: string;
-  public image!: string;
-  public guitarType!: string;
-  public sku!: string;
-  public stringsCount!: number;
-  public rating!: number;
-  public price!: number;
-  public reviewsCount!: number;
-}
+import {products as data} from '../app/app';
+import {ProductDto} from '../../types/product.dto';
 
 type AddToCartModalState = {
-  isOpened: boolean;
+  isAddToCartModalOpened: boolean;
+  isSuccessAddModalOpened: boolean;
   product: ProductDto | null;
 };
 
@@ -25,7 +13,8 @@ type CatalogProps = {
 };
 
 function Catalog({setAddToCartModalState}: CatalogProps): JSX.Element {
-  const products = getProducts();
+  const products = data;
+
   return (
     <div className="cards catalog__cards">
       {

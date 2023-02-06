@@ -1,25 +1,10 @@
 import {Link} from 'react-router-dom';
-
-class ProductDto { // TODO: перенести в типы
-  public id!: number;
-  public title!: string;
-  public description!: string;
-  public createdAt!: string;
-  public image!: string;
-  public guitarType!: string;
-  public sku!: string;
-  public stringsCount!: number;
-  public rating!: number;
-  public price!: number;
-  public reviewsCount!: number;
-}
-
-const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично']; // TODO: перенести в константы
-
-const maxRatingStarsCount = 5; // TODO: перенести в константы
+import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {ProductDto} from '../../types/product.dto';
 
 type AddToCartModalState = {
-  isOpened: boolean;
+  isAddToCartModalOpened: boolean;
+  isSuccessAddModalOpened: boolean;
   product: ProductDto | null;
 };
 
@@ -29,13 +14,14 @@ type ProductCardProps = {
 };
 
 function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
+
   return (
     <div className="product-card">
       <img src={product.image} srcSet="img/content/catalog-product-0@2x.png 2x" width="75" height="190" alt={product.title}/>
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {
-            Array.from({length: maxRatingStarsCount}, (_item, index) => index + 1).map((starPosition) => (
+            Array.from({length: MAX_RATING_STARS_COUNT}, (_item, index) => index + 1).map((starPosition) => (
               <svg key={starPosition} width="12" height="11" aria-hidden="true">
                 <use xlinkHref={starPosition <= product.rating ? '#icon-full-star' : '#icon-star'}></use>
               </svg>
@@ -50,9 +36,14 @@ function ProductCard({product, setAddToCartModalState}: ProductCardProps) {
         </p>
       </div>
       <div className="product-card__buttons">
-        <Link className="button button--mini" to="/product">Подробнее</Link>
-        {/* меняем класс, если товар в корзине */}
-        <Link className="button button--red button--mini button--add-to-cart" to="/" onClick={() => setAddToCartModalState({isOpened: true, product})}>Купить</Link>
+        <Link className="button button--mini" to="/product/1">Подробнее</Link>
+        <Link
+          to=""
+          /* меняем класс, если товар в корзине */
+          className="button button--red button--mini button--add-to-cart"
+          onClick={() => setAddToCartModalState({isAddToCartModalOpened: true, isSuccessAddModalOpened: false, product})}
+        >Купить
+        </Link>
       </div>
     </div>
   );

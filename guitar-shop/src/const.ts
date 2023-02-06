@@ -17,3 +17,7 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично'];
+
+export const MAX_RATING_STARS_COUNT = 5;

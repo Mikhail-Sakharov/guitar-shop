@@ -1,19 +1,8 @@
-class ProductDto { // TODO: перенести в типы
-  public id!: number;
-  public title!: string;
-  public description!: string;
-  public createdAt!: string;
-  public image!: string;
-  public guitarType!: string;
-  public sku!: string;
-  public stringsCount!: number;
-  public rating!: number;
-  public price!: number;
-  public reviewsCount!: number;
-}
+import {ProductDto} from '../../../types/product.dto';
 
 type AddToCartModalState = {
-  isOpened: boolean;
+  isAddToCartModalOpened: boolean;
+  isSuccessAddModalOpened: boolean;
   product: ProductDto | null;
 };
 
@@ -25,7 +14,10 @@ type AddToCartModalProps = {
 function AddToCartModal({product, setAddToCartModalState}: AddToCartModalProps): JSX.Element {
 
   const handleAddButtonClick = () => {
-    setAddToCartModalState({isOpened: false, product: null});
+    setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null});
+    // await диспатч асинх действия добавления в корзину
+    // обновить состояние корзины (перейдёт в асинх диспатч)
+    setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: true, product: null});
   };
 
   return (
@@ -50,7 +42,7 @@ function AddToCartModal({product, setAddToCartModalState}: AddToCartModalProps):
             <div className="modal__button-container">
               <button onClick={handleAddButtonClick} className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
             </div>
-            <button onClick={() => setAddToCartModalState({isOpened: false, product: null})} className="modal__close-btn button-cross" type="button" aria-label="Закрыть"><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
+            <button onClick={() => setAddToCartModalState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null})} className="modal__close-btn button-cross" type="button" aria-label="Закрыть"><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
             </button>
           </div>
         </div>
