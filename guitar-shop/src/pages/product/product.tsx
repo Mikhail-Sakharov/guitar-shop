@@ -3,7 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductAction} from '../../store/api-actons';
+import {fetchReviewsAction, fetchProductAction} from '../../store/api-actons';
 import {getProduct} from '../../store/app-data/selectors';
 
 function Product(): JSX.Element {
@@ -15,6 +15,7 @@ function Product(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchProductAction(productId));
+    dispatch(fetchReviewsAction()); // добавить выборку по id продукта
   }, [dispatch, productId]);
 
   const product = useAppSelector(getProduct);

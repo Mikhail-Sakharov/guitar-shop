@@ -14,7 +14,8 @@ export enum AppRoute {
 }
 
 export enum APIRoute {
-  Products = '/products'
+  Products = '/products',
+  Reviews = '/reviews'
 }
 
 export enum AuthorizationStatus {

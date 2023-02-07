@@ -1,9 +1,11 @@
 import {Link} from 'react-router-dom';
-import {getReviews} from '../../mocks/reviews';
+import {useAppSelector} from '../../hooks';
+import {getReviews} from '../../store/app-data/selectors';
 import Review from '../review/review';
 
 function ReviewsSection(): JSX.Element {
-  const reviews = getReviews();
+  const reviews = useAppSelector(getReviews);
+
   return (
     <section className="reviews">
       <h3 className="reviews__title title title--bigger">Отзывы</h3>
