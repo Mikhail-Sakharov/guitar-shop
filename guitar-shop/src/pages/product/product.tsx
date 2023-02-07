@@ -15,7 +15,7 @@ function Product(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchProductAction(productId));
-    dispatch(fetchReviewsAction()); // добавить выборку по id продукта
+    dispatch(fetchReviewsAction(productId));
   }, [dispatch, productId]);
 
   const product = useAppSelector(getProduct);

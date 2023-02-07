@@ -29,14 +29,14 @@ export const fetchProductAction = createAsyncThunk<ProductDto, number, {
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<ReviewDto[], undefined, {
+export const fetchReviewsAction = createAsyncThunk<ReviewDto[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchComments',
+  'data/fetchReviews',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<ReviewDto[]>(APIRoute.Reviews);
+    const {data} = await api.get<ReviewDto[]>(`${APIRoute.Reviews}?productId=${_arg}`);
     return data;
   },
 );

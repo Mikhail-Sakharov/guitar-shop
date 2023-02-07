@@ -1,8 +1,9 @@
 export class ProductDto {
   public id!: number;
+  public createdAt!: string;
+  public authorId!: string;
   public title!: string;
   public description!: string;
-  public createdAt!: string;
   public image!: string;
   public guitarType!: string;
   public sku!: string;
