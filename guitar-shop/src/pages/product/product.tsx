@@ -1,15 +1,23 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
-import {useAppSelector} from '../../hooks';
-import {getProducts} from '../../store/app-data/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchProductAction} from '../../store/api-actons';
+import {getProduct} from '../../store/app-data/selectors';
 
 function Product(): JSX.Element {
-  const data = useAppSelector(getProducts);
+  const dispatch = useAppDispatch();
+
   const [isCharacteristics, setIsCharacteristics] = useState(false);
+
   const productId = Number(useParams().id);
-  const product = data.find((item) => item.id === productId); // добавить асинх действие получения одного продукта
+
+  useEffect(() => {
+    dispatch(fetchProductAction(productId));
+  }, [dispatch, productId]);
+
+  const product = useAppSelector(getProduct);
 
   return (
     <main className="page-content">

@@ -9,9 +9,21 @@ export const fetchProductsAction = createAsyncThunk<ProductDto[], undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchHotels',
+  'data/fetchProducts',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<ProductDto[]>(APIRoute.Products);
+    return data;
+  },
+);
+
+export const fetchProductAction = createAsyncThunk<ProductDto, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchProduct',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<ProductDto>(`${APIRoute.Products}/${_arg}`);
     return data;
   },
 );
