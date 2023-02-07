@@ -6,12 +6,14 @@ import {fetchReviewsAction, fetchProductAction, fetchProductsAction} from '../ap
 
 type InitalState = {
   products: ProductDto[];
+  productsCount: number;
   product: ProductDto | null;
   reviews: ReviewDto[];
 }
 
 const initialState: InitalState = {
   products: [],
+  productsCount: 0,
   product: null,
   reviews: []
 };
@@ -23,7 +25,11 @@ export const appData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchProductsAction.fulfilled, (state, action) => {
-        state.products = action.payload;
+        if (typeof(action.payload) === 'number') {
+          state.productsCount = action.payload;
+        } else {
+          state.products = action.payload;
+        }
       })
       .addCase(fetchProductAction.fulfilled, (state, action) => {
         state.product = action.payload;

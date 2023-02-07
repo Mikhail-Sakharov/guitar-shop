@@ -7,6 +7,7 @@ import HistoryRouter from './components/history-router/history-router';
 import {store} from './store';
 import {fetchProductsAction} from './store/api-actons';
 
+store.dispatch(fetchProductsAction({page: 1, limit: 9}));
 store.dispatch(fetchProductsAction());
 
 const root = ReactDOM.createRoot(

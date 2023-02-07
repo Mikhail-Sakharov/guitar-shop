@@ -1,19 +1,24 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {APIRoute} from '../const';
+import {getQueryString} from '../helpers';
+import {QueryArguments} from '../types/common';
 import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
 
-export const fetchProductsAction = createAsyncThunk<ProductDto[], undefined, {
+export const fetchProductsAction = createAsyncThunk<ProductDto[] | number, QueryArguments | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchProducts',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<ProductDto[]>(APIRoute.Products);
-    return data;
+    const {data} = await api.get<ProductDto[]>(`${APIRoute.Products}${_arg ? getQueryString(_arg) : ''}`);
+    if (_arg) {
+      return data;
+    }
+    return data.length;
   },
 );
 

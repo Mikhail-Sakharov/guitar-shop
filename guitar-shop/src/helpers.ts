@@ -1,3 +1,5 @@
+import {QueryArguments} from './types/common';
+
 export const getRandom = (min: number, max: number) => {
   [min, max] = [Math.abs(min), Math.abs(max)];
   if (max < min) {[min, max] = [max, min];}
@@ -22,3 +24,9 @@ const monthNames = [
 export function humanizeDate(date: string): string {
   return `${date[8]}${date[9]} ${monthNames[Number(`${date[5]}${date[6]}`) - 1]}`;
 }
+
+export const getQueryString = (args: QueryArguments) => {
+  if (!args) {return '';}
+  const queryParams = [`${args.page ? `_page=${args.page}` : ''}`, `${args.limit ? `_limit=${args.limit}` : ''}`];
+  return queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
+};
