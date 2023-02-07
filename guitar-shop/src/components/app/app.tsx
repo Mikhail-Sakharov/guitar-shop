@@ -1,4 +1,4 @@
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {getProducts} from '../../mocks/products';
 import AddItem from '../../pages/add-item/add-item';
@@ -25,44 +25,42 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector();
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main} element={<Layout />}>
-          <Route index element={<Main />}/>
-          <Route
-            path={AppRoute.Login}
-            element={
-              authorizationStatus !== AuthorizationStatus.Auth
-                ? <Login />
-                : <Navigate to={AppRoute.Main}/>
-            }
-          />
-          <Route
-            path={AppRoute.Registration}
-            element={
-              authorizationStatus !== AuthorizationStatus.Auth
-                ? <Registration />
-                : <Navigate to={AppRoute.Main}/>
-            }
-          />
-          <Route path={AppRoute.ProductId} element={<Product />}/>
-          <Route path={AppRoute.Products} element={<ProductList />}/>
-          <Route
-            path={AppRoute.Cart}
-            element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
-                <Cart />
-              </PrivateRoute>
-            }
-          />
-          <Route path={AppRoute.AddItem} element={<AddItem />}/>
-          <Route path={AppRoute.EditItem} element={<EditItem />}/>
-          <Route path={AppRoute.Order} element={<Order />}/>
-          <Route path={AppRoute.Orders} element={<Orders />}/>
-          <Route path={AppRoute.NotFound} element={<NotFound />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path={AppRoute.Main} element={<Layout />}>
+        <Route index element={<Main />}/>
+        <Route
+          path={AppRoute.Login}
+          element={
+            authorizationStatus !== AuthorizationStatus.Auth
+              ? <Login />
+              : <Navigate to={AppRoute.Main}/>
+          }
+        />
+        <Route
+          path={AppRoute.Registration}
+          element={
+            authorizationStatus !== AuthorizationStatus.Auth
+              ? <Registration />
+              : <Navigate to={AppRoute.Main}/>
+          }
+        />
+        <Route path={AppRoute.ProductId} element={<Product />}/>
+        <Route path={AppRoute.Products} element={<ProductList />}/>
+        <Route
+          path={AppRoute.Cart}
+          element={
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route path={AppRoute.AddItem} element={<AddItem />}/>
+        <Route path={AppRoute.EditItem} element={<EditItem />}/>
+        <Route path={AppRoute.Order} element={<Order />}/>
+        <Route path={AppRoute.Orders} element={<Orders />}/>
+        <Route path={AppRoute.NotFound} element={<NotFound />}/>
+      </Route>
+    </Routes>
   );
 }
 
