@@ -13,10 +13,19 @@ export enum AppRoute {
   NotFound = '*'
 }
 
+export enum APIRoute {
+  Products = '/products'
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
+}
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER'
 }
 
 export const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично'];

@@ -1,6 +1,5 @@
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {getProducts} from '../../mocks/products';
 import AddItem from '../../pages/add-item/add-item';
 import Cart from '../../pages/cart/cart';
 import EditItem from '../../pages/edit-item/edit-item';
@@ -14,8 +13,6 @@ import Product from '../../pages/product/product';
 import Registration from '../../pages/registration/registration';
 import Layout from '../layout/layout';
 import PrivateRoute from '../private-route/private-route';
-
-export const products = getProducts();
 
 export function useAppSelector() {
   return AuthorizationStatus.Auth;

@@ -1,13 +1,15 @@
 import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {products as data} from '../../components/app/app';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {useAppSelector} from '../../hooks';
+import {getProducts} from '../../store/app-data/selectors';
 
 function Product(): JSX.Element {
+  const data = useAppSelector(getProducts);
   const [isCharacteristics, setIsCharacteristics] = useState(false);
   const productId = Number(useParams().id);
-  const product = data.find((item) => item.id === productId);
+  const product = data.find((item) => item.id === productId); // добавить асинх действие получения одного продукта
 
   return (
     <main className="page-content">
