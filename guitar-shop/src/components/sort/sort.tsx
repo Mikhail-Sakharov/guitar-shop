@@ -1,6 +1,7 @@
+import {DEFAULT_PAGE_NUMBER} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
-import {changeSortTypeAction, changeSortOrderAction} from '../../store/app-data/app-data';
+import {changeSortTypeAction, changeSortOrderAction, changeActivePageAction} from '../../store/app-data/app-data';
 import {getSortType, getSortOrder} from '../../store/app-data/selectors';
 import {SortOrder, SortType} from '../../types/common';
 
@@ -11,8 +12,8 @@ function Sort() {
   const sortOrder = useAppSelector(getSortOrder);
 
   const handleSortTypeClick = (sort: SortType) => {
-    dispatch(fetchProductsAction({sort, order: SortOrder.Asc}));
-    dispatch(fetchProductsAction()); // спорно, нужно ли обновлять количество (?)
+    dispatch(fetchProductsAction({page: DEFAULT_PAGE_NUMBER, sort, order: SortOrder.Asc}));
+    dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
     dispatch(changeSortTypeAction(sort));
     dispatch(changeSortOrderAction(SortOrder.Asc));
   };

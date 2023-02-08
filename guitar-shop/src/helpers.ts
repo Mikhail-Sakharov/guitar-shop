@@ -1,3 +1,4 @@
+import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from './const';
 import {SortOrder, QueryArguments, SortType} from './types/common';
 
 export const getRandom = (min: number, max: number) => {
@@ -28,8 +29,8 @@ export function humanizeDate(date: string): string {
 export const getQueryString = (args: QueryArguments) => {
   if (!args) {return '';}
   const queryParams = [
-    `${args.page ? `_page=${args.page}` : '_page=1'}`,
-    `${args.limit ? `_limit=${args.limit}` : '_limit=9'}`,
+    `${args.page ? `_page=${args.page}` : `_page=${DEFAULT_PAGE_NUMBER}`}`,
+    `${args.limit ? `_limit=${args.limit}` : `_limit=${PRODUCTS_LIMIT}`}`,
     `${args.sort ? `_sort=${args.sort}` : `_sort=${SortType.Price}`}`,
     `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Asc}`}`,
   ];

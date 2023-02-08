@@ -32,3 +32,7 @@ export enum NameSpace {
 export const ratings = ['Не определено', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично'];
 
 export const MAX_RATING_STARS_COUNT = 5;
+
+export const DEFAULT_PAGE_NUMBER = 1;
+
+export const PRODUCTS_LIMIT = 9;

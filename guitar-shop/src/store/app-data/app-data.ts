@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
+import {DEFAULT_PAGE_NUMBER, NameSpace} from '../../const';
 import {SortType, SortOrder} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
@@ -8,6 +8,7 @@ import {fetchReviewsAction, fetchProductAction, fetchProductsAction} from '../ap
 type InitalState = {
   products: ProductDto[];
   productsCount: number;
+  activePage: number;
   sortType: SortType;
   sortOrder: SortOrder;
   product: ProductDto | null;
@@ -17,6 +18,7 @@ type InitalState = {
 const initialState: InitalState = {
   products: [],
   productsCount: 0,
+  activePage: DEFAULT_PAGE_NUMBER,
   sortType: SortType.Price,
   sortOrder: SortOrder.Asc,
   product: null,
@@ -32,6 +34,9 @@ export const appData = createSlice({
     },
     changeSortOrderAction: (state, action) => {
       state.sortOrder = action.payload as SortOrder;
+    },
+    changeActivePageAction: (state, action) => {
+      state.activePage = action.payload as number;
     }
   },
   extraReducers(builder) {
@@ -52,4 +57,4 @@ export const appData = createSlice({
   }
 });
 
-export const {changeSortTypeAction, changeSortOrderAction} = appData.actions;
+export const {changeSortTypeAction, changeSortOrderAction, changeActivePageAction} = appData.actions;

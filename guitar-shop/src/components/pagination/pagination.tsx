@@ -1,11 +1,11 @@
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
-import {getProductsCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
+import {changeActivePageAction} from '../../store/app-data/app-data';
+import {getActivePage, getProductsCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 
 const MAX_PAGES_COUNT = 3;
-const PRODUCTS_LIMIT = 9;
 
 function Pagination() {
   const dispatch = useAppDispatch();
@@ -13,25 +13,24 @@ function Pagination() {
   const productsCount = useAppSelector(getProductsCount);
   const sortType = useAppSelector(getSortType);
   const sortOrder = useAppSelector(getSortOrder);
-
-  const [activePage, setActivePage] = useState(1);
+  const activePage = useAppSelector(getActivePage);
 
   const pagesCount = Math.ceil(productsCount / PRODUCTS_LIMIT);
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
 
   const handlePrevClick = () => {
-    dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    setActivePage((prevState) => prevState === 1 ? prevState : prevState - 1);
+    dispatch(fetchProductsAction({page: activePage - 1, sort: sortType, order: sortOrder}));
+    dispatch(changeActivePageAction(activePage - 1));
   };
 
   const handlePageClick = (pageNumber: number) => {
-    dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    setActivePage(pageNumber);
+    dispatch(fetchProductsAction({page: pageNumber, sort: sortType, order: sortOrder}));
+    dispatch(changeActivePageAction(pageNumber));
   };
 
   const handleNextClick = () => {
-    dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    setActivePage((prevState) => prevState === pagesCount ? prevState : prevState + 1);
+    dispatch(fetchProductsAction({page: activePage + 1, sort: sortType, order: sortOrder}));
+    dispatch(changeActivePageAction(activePage + 1));
   };
 
   return (

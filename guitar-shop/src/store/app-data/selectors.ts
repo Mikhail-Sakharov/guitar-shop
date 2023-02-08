@@ -11,4 +11,4 @@ export const getProductsCount = (state: State): number => state[NameSpace.Data].
 
 export const getSortType = (state: State): SortType => state[NameSpace.Data].sortType;
 export const getSortOrder = (state: State): SortOrder => state[NameSpace.Data].sortOrder;
-
+export const getActivePage = (state: State): number => state[NameSpace.Data].activePage;
