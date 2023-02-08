@@ -2,20 +2,37 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
-import {getProductsCount} from '../../store/app-data/selectors';
+import {getProductsCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 
 const MAX_PAGES_COUNT = 3;
 const PRODUCTS_LIMIT = 9;
 
 function Pagination() {
   const dispatch = useAppDispatch();
-  const [activePage, setActivePage] = useState(1);
-
-  dispatch(fetchProductsAction({page: activePage, limit: PRODUCTS_LIMIT}));
 
   const productsCount = useAppSelector(getProductsCount);
+  const sortType = useAppSelector(getSortType);
+  const sortOrder = useAppSelector(getSortOrder);
+
+  const [activePage, setActivePage] = useState(1);
+
   const pagesCount = Math.ceil(productsCount / PRODUCTS_LIMIT);
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
+
+  const handlePrevClick = () => {
+    dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+    setActivePage((prevState) => prevState === 1 ? prevState : prevState - 1);
+  };
+
+  const handlePageClick = (pageNumber: number) => {
+    dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+    setActivePage(pageNumber);
+  };
+
+  const handleNextClick = () => {
+    dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+    setActivePage((prevState) => prevState === pagesCount ? prevState : prevState + 1);
+  };
 
   return (
     <div className="pagination page-content__pagination">
@@ -26,7 +43,7 @@ function Pagination() {
               <li className="pagination__page pagination__page--prev" id="prev">
                 <Link
                   className="link pagination__page-link" to=""
-                  onClick={() => setActivePage((prevState) => prevState === 1 ? prevState : prevState - 1)}
+                  onClick={handlePrevClick}
                 >
                   Назад
                 </Link>
@@ -38,7 +55,12 @@ function Pagination() {
             .slice(displayedPagesQueue * MAX_PAGES_COUNT, displayedPagesQueue * MAX_PAGES_COUNT + MAX_PAGES_COUNT)
             .map((pageNumber) => (
               <li key={pageNumber} className={`pagination__page ${pageNumber === activePage ? 'pagination__page--active' : ''}`}>
-                <Link onClick={() => setActivePage(pageNumber)} className="link pagination__page-link" to="">{pageNumber}</Link>
+                <Link
+                  className="link pagination__page-link" to=""
+                  onClick={() => handlePageClick(pageNumber)}
+                >
+                  {pageNumber}
+                </Link>
               </li>
             ))
         }
@@ -48,7 +70,7 @@ function Pagination() {
               <li className="pagination__page pagination__page--next" id="next">
                 <Link
                   className="link pagination__page-link" to=""
-                  onClick={() => setActivePage((prevState) => prevState === pagesCount ? prevState : prevState + 1)}
+                  onClick={handleNextClick}
                 >
                   Далее
                 </Link>

@@ -1,4 +1,5 @@
 import {NameSpace} from '../../const';
+import {SortType, SortOrder} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
 import {State} from '../../types/state';
@@ -7,3 +8,7 @@ export const getProducts = (state: State): ProductDto[] => state[NameSpace.Data]
 export const getProduct = (state: State): ProductDto | null => state[NameSpace.Data].product;
 export const getReviews = (state: State): ReviewDto[] => state[NameSpace.Data].reviews;
 export const getProductsCount = (state: State): number => state[NameSpace.Data].productsCount;
+
+export const getSortType = (state: State): SortType => state[NameSpace.Data].sortType;
+export const getSortOrder = (state: State): SortOrder => state[NameSpace.Data].sortOrder;
+

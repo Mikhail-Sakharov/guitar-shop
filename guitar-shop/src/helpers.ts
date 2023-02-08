@@ -1,4 +1,4 @@
-import {QueryArguments} from './types/common';
+import {SortOrder, QueryArguments, SortType} from './types/common';
 
 export const getRandom = (min: number, max: number) => {
   [min, max] = [Math.abs(min), Math.abs(max)];
@@ -27,6 +27,12 @@ export function humanizeDate(date: string): string {
 
 export const getQueryString = (args: QueryArguments) => {
   if (!args) {return '';}
-  const queryParams = [`${args.page ? `_page=${args.page}` : ''}`, `${args.limit ? `_limit=${args.limit}` : ''}`];
-  return queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
+  const queryParams = [
+    `${args.page ? `_page=${args.page}` : '_page=1'}`,
+    `${args.limit ? `_limit=${args.limit}` : '_limit=9'}`,
+    `${args.sort ? `_sort=${args.sort}` : `_sort=${SortType.Price}`}`,
+    `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Asc}`}`,
+  ];
+  const queryString = queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
+  return queryString;
 };

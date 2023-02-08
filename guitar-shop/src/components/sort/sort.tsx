@@ -1,14 +1,55 @@
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchProductsAction} from '../../store/api-actons';
+import {changeSortTypeAction, changeSortOrderAction} from '../../store/app-data/app-data';
+import {getSortType, getSortOrder} from '../../store/app-data/selectors';
+import {SortOrder, SortType} from '../../types/common';
+
 function Sort() {
+  const dispatch = useAppDispatch();
+
+  const sortType = useAppSelector(getSortType);
+  const sortOrder = useAppSelector(getSortOrder);
+
+  const handleSortTypeClick = (sort: SortType) => {
+    dispatch(fetchProductsAction({sort, order: SortOrder.Asc}));
+    dispatch(fetchProductsAction()); // спорно, нужно ли обновлять количество (?)
+    dispatch(changeSortTypeAction(sort));
+    dispatch(changeSortOrderAction(SortOrder.Asc));
+  };
+
+  const handleSortOrderClick = (order: SortOrder) => {
+    dispatch(fetchProductsAction({sort: sortType, order}));
+    dispatch(changeSortOrderAction(order));
+  };
+
   return (
     <div className="catalog-sort">
       <h2 className="catalog-sort__title">Сортировать:</h2>
       <div className="catalog-sort__type">
-        <button className="catalog-sort__type-button" aria-label="по цене">по цене</button>
-        <button className="catalog-sort__type-button" aria-label="по популярности">по популярности</button>
+        <button
+          className={`catalog-sort__type-button ${sortType === SortType.Price ? 'catalog-sort__type-button--active' : ''}`} aria-label="по цене"
+          onClick={() => handleSortTypeClick(SortType.Price)}
+        >
+          по цене
+        </button>
+        <button
+          className={`catalog-sort__type-button ${sortType === SortType.Rating ? 'catalog-sort__type-button--active' : ''}`} aria-label="по популярности"
+          onClick={() => handleSortTypeClick(SortType.Rating)}
+        >
+          по популярности
+        </button>
       </div>
       <div className="catalog-sort__order">
-        <button className="catalog-sort__order-button catalog-sort__order-button--up" aria-label="По возрастанию"></button>
-        <button className="catalog-sort__order-button catalog-sort__order-button--down" aria-label="По убыванию"></button>
+        <button
+          className={`catalog-sort__order-button catalog-sort__order-button--up ${sortOrder === SortOrder.Asc ? 'catalog-sort__order-button--active' : ''}`} aria-label="По возрастанию"
+          onClick={() => handleSortOrderClick(SortOrder.Asc)}
+        >
+        </button>
+        <button
+          className={`catalog-sort__order-button catalog-sort__order-button--down ${sortOrder === SortOrder.Desc ? 'catalog-sort__order-button--active' : ''}`} aria-label="По убыванию"
+          onClick={() => handleSortOrderClick(SortOrder.Desc)}
+        >
+        </button>
       </div>
     </div>
   );
