@@ -1,13 +1,30 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
+import {changeActivePageAction} from '../../store/app-data/app-data';
 import {getMaxPrice, getMinPrice} from '../../store/app-data/selectors';
+import {GuitarType} from '../../types/common';
 
 function Filter() {
   const dispatch = useAppDispatch();
 
   const minCurrentCatalogPrice = useAppSelector(getMinPrice);
   const maxCurrentCatalogPrice = useAppSelector(getMaxPrice);
+
+  useEffect(() => {
+    const guitarTypeFilter = [
+      acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
+      electro ? `guitarType=${GuitarType.Electro}` : '',
+      ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
+    ].filter((type) => type !== '').join('&');
+    dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
+    dispatch(fetchProductsAction({
+      page: DEFAULT_PAGE_NUMBER,
+      limit: PRODUCTS_LIMIT,
+      guitarTypeFilter
+    }));
+  });
 
   /* const handleMinPriceInputChange = () => {
     console.log('handleMinPriceInputChange');
@@ -23,15 +40,34 @@ function Filter() {
 
   const handleAcousticInputChange = () => {
     setAcoustic((prevState) => !prevState);
-    dispatch(fetchProductsAction({}));
   };
 
   const handleElectroInputChange = () => {
     setElectro((prevState) => !prevState);
+    /* const guitarTypeFilter = [
+      acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
+      !electro ? `guitarType=${GuitarType.Electro}` : '',
+      ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
+    ].filter((type) => type !== '').join('&');
+    dispatch(fetchProductsAction({
+      page: DEFAULT_PAGE_NUMBER,
+      limit: PRODUCTS_LIMIT,
+      guitarTypeFilter
+    })); */
   };
 
   const handleUkuleleInputChange = () => {
     setUkulele((prevState) => !prevState);
+    /* const guitarTypeFilter = [
+      acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
+      electro ? `guitarType=${GuitarType.Electro}` : '',
+      !ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
+    ].filter((type) => type !== '').join('&');
+    dispatch(fetchProductsAction({
+      page: DEFAULT_PAGE_NUMBER,
+      limit: PRODUCTS_LIMIT,
+      guitarTypeFilter
+    })); */
   };
 
   return (

@@ -15,11 +15,11 @@ export const fetchProductsAction = createAsyncThunk<[ProductDto[], number, numbe
   'data/fetchProducts',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<ProductDto[]>(`${APIRoute.Products}${_arg ? getQueryString(_arg) : ''}`);
-    delete _arg?.page;
-    delete _arg?.limit;
 
     // запрос с теми же параметрами, но без лимита и номера страницы для формирования пагинации
-    const products = await api.get<ProductDto[]>(`${APIRoute.Products}${getQueryString(_arg)}`);
+    const products = await api.get<ProductDto[]>(
+      `${APIRoute.Products}${getQueryString({..._arg, page: undefined, limit: undefined})}`
+    );
     const productsCount = products.data.length;
 
     // поиск мин и макс цены из выборки
