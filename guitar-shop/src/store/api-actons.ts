@@ -7,7 +7,7 @@ import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
 
-export const fetchProductsAction = createAsyncThunk<ProductDto[] | number, QueryArguments | undefined, {
+export const fetchProductsAction = createAsyncThunk<[ProductDto[], number, number, number], QueryArguments | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -15,10 +15,19 @@ export const fetchProductsAction = createAsyncThunk<ProductDto[] | number, Query
   'data/fetchProducts',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<ProductDto[]>(`${APIRoute.Products}${_arg ? getQueryString(_arg) : ''}`);
-    if (_arg) {
-      return data;
-    }
-    return data.length;
+    delete _arg?.page;
+    delete _arg?.limit;
+
+    // запрос с теми же параметрами, но без лимита и номера страницы для формирования пагинации
+    const products = await api.get<ProductDto[]>(`${APIRoute.Products}${getQueryString(_arg)}`);
+    const productsCount = products.data.length;
+
+    // поиск мин и макс цены из выборки
+    const prices = products.data.map((product) => product.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    return [data, productsCount, minPrice, maxPrice];
   },
 );
 

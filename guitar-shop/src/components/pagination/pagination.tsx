@@ -19,17 +19,17 @@ function Pagination() {
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
 
   const handlePrevClick = () => {
-    dispatch(fetchProductsAction({page: activePage - 1, sort: sortType, order: sortOrder}));
+    dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(activePage - 1));
   };
 
   const handlePageClick = (pageNumber: number) => {
-    dispatch(fetchProductsAction({page: pageNumber, sort: sortType, order: sortOrder}));
+    dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(pageNumber));
   };
 
   const handleNextClick = () => {
-    dispatch(fetchProductsAction({page: activePage + 1, sort: sortType, order: sortOrder}));
+    dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(activePage + 1));
   };
 

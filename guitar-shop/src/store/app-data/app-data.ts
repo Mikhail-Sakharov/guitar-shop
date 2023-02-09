@@ -11,6 +11,8 @@ type InitalState = {
   activePage: number;
   sortType: SortType;
   sortOrder: SortOrder;
+  minPrice: number;
+  maxPrice: number;
   product: ProductDto | null;
   reviews: ReviewDto[];
 }
@@ -21,6 +23,8 @@ const initialState: InitalState = {
   activePage: DEFAULT_PAGE_NUMBER,
   sortType: SortType.Price,
   sortOrder: SortOrder.Asc,
+  minPrice: 100,
+  maxPrice: 1000000,
   product: null,
   reviews: []
 };
@@ -41,12 +45,11 @@ export const appData = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchProductsAction.fulfilled, (state, action) => { // разделить действия
-        if (typeof(action.payload) === 'number') {
-          state.productsCount = action.payload;
-        } else {
-          state.products = action.payload;
-        }
+      .addCase(fetchProductsAction.fulfilled, (state, action) => {
+        state.products = action.payload[0];
+        state.productsCount = action.payload[1];
+        state.minPrice = action.payload[2];
+        state.maxPrice = action.payload[3];
       })
       .addCase(fetchProductAction.fulfilled, (state, action) => {
         state.product = action.payload;

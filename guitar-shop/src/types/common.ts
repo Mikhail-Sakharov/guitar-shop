@@ -13,4 +13,24 @@ export type QueryArguments = {
   limit?: number;
   sort?: SortType;
   order?: SortOrder;
+  guitarType?: GuitarType[];
+  stringsCount?: StringsCount[];
 };
+
+export type PriceFilter = {
+  minPrice: number;
+  maxPrice: number;
+};
+
+export enum GuitarType {
+  Acoustic = 'аккустика',
+  Electro = 'электро',
+  Ukulele = 'укулеле'
+}
+
+export enum StringsCount {
+  Four = 4,
+  Six = 6,
+  Seven = 7,
+  Twelve = 12
+}

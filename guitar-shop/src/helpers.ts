@@ -1,4 +1,3 @@
-import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from './const';
 import {SortOrder, QueryArguments, SortType} from './types/common';
 
 export const getRandom = (min: number, max: number) => {
@@ -26,13 +25,15 @@ export function humanizeDate(date: string): string {
   return `${date[8]}${date[9]} ${monthNames[Number(`${date[5]}${date[6]}`) - 1]}`;
 }
 
-export const getQueryString = (args: QueryArguments) => {
+export const getQueryString = (args: QueryArguments | undefined) => {
   if (!args) {return '';}
   const queryParams = [
-    `${args.page ? `_page=${args.page}` : `_page=${DEFAULT_PAGE_NUMBER}`}`,
-    `${args.limit ? `_limit=${args.limit}` : `_limit=${PRODUCTS_LIMIT}`}`,
+    `${args.page ? `_page=${args.page}` : ''}`,
+    `${args.limit ? `_limit=${args.limit}` : ''}`,
     `${args.sort ? `_sort=${args.sort}` : `_sort=${SortType.Price}`}`,
     `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Asc}`}`,
+    // `${args.guitarType ? `guitarType=${args.guitarType}` : ''}`,
+    // `${args.stringsCount ? `stringsCount=${args.stringsCount}` : ''}`,
   ];
   const queryString = queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
   return queryString;

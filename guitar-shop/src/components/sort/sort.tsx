@@ -1,4 +1,4 @@
-import {DEFAULT_PAGE_NUMBER} from '../../const';
+import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
 import {changeSortTypeAction, changeSortOrderAction, changeActivePageAction} from '../../store/app-data/app-data';
@@ -12,14 +12,14 @@ function Sort() {
   const sortOrder = useAppSelector(getSortOrder);
 
   const handleSortTypeClick = (sort: SortType) => {
-    dispatch(fetchProductsAction({page: DEFAULT_PAGE_NUMBER, sort, order: SortOrder.Asc}));
+    dispatch(fetchProductsAction({page: DEFAULT_PAGE_NUMBER, limit: PRODUCTS_LIMIT, sort, order: SortOrder.Asc}));
     dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
     dispatch(changeSortTypeAction(sort));
     dispatch(changeSortOrderAction(SortOrder.Asc));
   };
 
   const handleSortOrderClick = (order: SortOrder) => {
-    dispatch(fetchProductsAction({sort: sortType, order}));
+    dispatch(fetchProductsAction({page: DEFAULT_PAGE_NUMBER, limit: PRODUCTS_LIMIT, sort: sortType, order}));
     dispatch(changeSortOrderAction(order));
   };
 
