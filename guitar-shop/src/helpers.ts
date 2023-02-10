@@ -32,9 +32,19 @@ export const getQueryString = (args: QueryArguments | undefined) => {
     `${args.limit ? `_limit=${args.limit}` : ''}`,
     `${args.sort ? `_sort=${args.sort}` : `_sort=${SortType.Price}`}`,
     `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Asc}`}`,
+    `${args.minPriceFilter ? args.minPriceFilter : ''}`,
+    `${args.maxPriceFilter ? args.maxPriceFilter : ''}`,
     `${args.guitarTypeFilter ? `${args.guitarTypeFilter}` : ''}`,
     `${args.stringsCountFilter ? `${args.stringsCountFilter}` : ''}`
   ];
-  const queryString = queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
+  const queryString = `?${queryParams.filter((param) => param !== '').join('&')}`;
   return queryString;
+};
+
+export const debounce = (callback: (state: string) => void, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return function (state: string) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback(state), delay);
+  };
 };

@@ -1,5 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
+import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
 import {changeActivePageAction} from '../../store/app-data/app-data';
@@ -14,7 +15,24 @@ function Filter() {
   const minCurrentCatalogPrice = useAppSelector(getMinPrice);
   const maxCurrentCatalogPrice = useAppSelector(getMaxPrice);
 
+  const minPriceRef = useRef<HTMLInputElement | null>(null);
+  const maxPriceRef = useRef<HTMLInputElement | null>(null);
+
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
+
+  const [acoustic, setAcoustic] = useState(false);
+  const [electro, setElectro] = useState(false);
+  const [ukulele, setUkulele] = useState(false);
+
+  const [fourStringsFilter, setFourStringsFilter] = useState(false);
+  const [sixStringsFilter, setSixStringsFilter] = useState(false);
+  const [sevenStringsFilter, setSevenStringsFilter] = useState(false);
+  const [twelveStringsFilter, setTwelveStringsFilter] = useState(false);
+
   useEffect(() => {
+    const minPriceFilter = minPrice !== '' ? `price_gte=${minPrice}` : '';
+    const maxPriceFilter = maxPrice !== '' ? `price_lte=${maxPrice}` : '';
     const guitarTypeFilter = [
       acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
       electro ? `guitarType=${GuitarType.Electro}` : '',
@@ -32,27 +50,23 @@ function Filter() {
       limit: PRODUCTS_LIMIT,
       sort: sortType,
       order: sortOrder,
+      minPriceFilter,
+      maxPriceFilter,
       guitarTypeFilter,
       stringsCountFilter
     }));
   });
 
-  /* const handleMinPriceInputChange = () => {
-    console.log('handleMinPriceInputChange');
+  const setMinPriceDebounced = debounce((arg) => setMinPrice(arg), 1000);
+  const setMaxPriceDebounced = debounce((arg) => setMaxPrice(arg), 1000);
+
+  const handleMinPriceInputChange = () => {
+    setMinPriceDebounced(minPriceRef.current ? minPriceRef.current.value : '');
   };
 
   const handleMaxPriceInputChange = () => {
-    console.log('handleMaxPriceInputChange');
-  }; */
-
-  const [acoustic, setAcoustic] = useState(false);
-  const [electro, setElectro] = useState(false);
-  const [ukulele, setUkulele] = useState(false);
-
-  const [fourStringsFilter, setFourStringsFilter] = useState(false);
-  const [sixStringsFilter, setSixStringsFilter] = useState(false);
-  const [sevenStringsFilter, setSevenStringsFilter] = useState(false);
-  const [twelveStringsFilter, setTwelveStringsFilter] = useState(false);
+    setMaxPriceDebounced(maxPriceRef.current ? maxPriceRef.current.value : '');
+  };
 
   const handleAcousticInputChange = () => {
     setAcoustic((prevState) => !prevState);
@@ -83,6 +97,8 @@ function Filter() {
   };
 
   const handleResetButtonClick = () => {
+    setMinPrice('');
+    setMaxPrice('');
     setAcoustic(false);
     setElectro(false);
     setUkulele(false);
@@ -101,17 +117,19 @@ function Filter() {
           <div className="form-input">
             <label className="visually-hidden">Минимальная цена</label>
             <input
+              ref={minPriceRef}
               pattern="^[1-9]{1}[0-9]{2,5}&"
               type="number" placeholder={`${minCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMin" name="от"
-              // onChange={handleMinPriceInputChange}
+              onChange={handleMinPriceInputChange}
             />
           </div>
           <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
             <input
+              ref={maxPriceRef}
               pattern="^[1-9]{1}[0-9]{2,5}&"
               type="number" placeholder={`${maxCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMax" name="до"
-              // onChange={handleMaxPriceInputChange}
+              onChange={handleMaxPriceInputChange}
             />
           </div>
         </div>

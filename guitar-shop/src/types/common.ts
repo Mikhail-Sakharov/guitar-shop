@@ -13,6 +13,8 @@ export type QueryArguments = {
   limit?: number;
   sort?: SortType;
   order?: SortOrder;
+  minPriceFilter?: string;
+  maxPriceFilter?: string;
   guitarTypeFilter?: string;
   stringsCountFilter?: string;
 };
