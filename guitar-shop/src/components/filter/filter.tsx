@@ -3,12 +3,14 @@ import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
 import {changeActivePageAction} from '../../store/app-data/app-data';
-import {getMaxPrice, getMinPrice} from '../../store/app-data/selectors';
-import {GuitarType} from '../../types/common';
+import {getMaxPrice, getMinPrice, getSortOrder, getSortType} from '../../store/app-data/selectors';
+import {GuitarType, StringsCount} from '../../types/common';
 
 function Filter() {
   const dispatch = useAppDispatch();
 
+  const sortType = useAppSelector(getSortType);
+  const sortOrder = useAppSelector(getSortOrder);
   const minCurrentCatalogPrice = useAppSelector(getMinPrice);
   const maxCurrentCatalogPrice = useAppSelector(getMaxPrice);
 
@@ -18,11 +20,20 @@ function Filter() {
       electro ? `guitarType=${GuitarType.Electro}` : '',
       ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
     ].filter((type) => type !== '').join('&');
+    const stringsCountFilter = [
+      fourStringsFilter ? `stringsCount=${StringsCount.Four}` : '',
+      sixStringsFilter ? `stringsCount=${StringsCount.Six}` : '',
+      sevenStringsFilter ? `stringsCount=${StringsCount.Seven}` : '',
+      twelveStringsFilter ? `stringsCount=${StringsCount.Twelve}` : ''
+    ].filter((type) => type !== '').join('&');
     dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
     dispatch(fetchProductsAction({
       page: DEFAULT_PAGE_NUMBER,
       limit: PRODUCTS_LIMIT,
-      guitarTypeFilter
+      sort: sortType,
+      order: sortOrder,
+      guitarTypeFilter,
+      stringsCountFilter
     }));
   });
 
@@ -38,36 +49,47 @@ function Filter() {
   const [electro, setElectro] = useState(false);
   const [ukulele, setUkulele] = useState(false);
 
+  const [fourStringsFilter, setFourStringsFilter] = useState(false);
+  const [sixStringsFilter, setSixStringsFilter] = useState(false);
+  const [sevenStringsFilter, setSevenStringsFilter] = useState(false);
+  const [twelveStringsFilter, setTwelveStringsFilter] = useState(false);
+
   const handleAcousticInputChange = () => {
     setAcoustic((prevState) => !prevState);
   };
 
   const handleElectroInputChange = () => {
     setElectro((prevState) => !prevState);
-    /* const guitarTypeFilter = [
-      acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
-      !electro ? `guitarType=${GuitarType.Electro}` : '',
-      ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
-    ].filter((type) => type !== '').join('&');
-    dispatch(fetchProductsAction({
-      page: DEFAULT_PAGE_NUMBER,
-      limit: PRODUCTS_LIMIT,
-      guitarTypeFilter
-    })); */
   };
 
   const handleUkuleleInputChange = () => {
     setUkulele((prevState) => !prevState);
-    /* const guitarTypeFilter = [
-      acoustic ? `guitarType=${GuitarType.Acoustic}` : '',
-      electro ? `guitarType=${GuitarType.Electro}` : '',
-      !ukulele ? `guitarType=${GuitarType.Ukulele}` : ''
-    ].filter((type) => type !== '').join('&');
-    dispatch(fetchProductsAction({
-      page: DEFAULT_PAGE_NUMBER,
-      limit: PRODUCTS_LIMIT,
-      guitarTypeFilter
-    })); */
+  };
+
+  const handleFourStringsInputChange = () => {
+    setFourStringsFilter((prevState) => !prevState);
+  };
+
+  const handleSixStringsInputChange = () => {
+    setSixStringsFilter((prevState) => !prevState);
+  };
+
+  const handleSevenStringsInputChange = () => {
+    setSevenStringsFilter((prevState) => !prevState);
+  };
+
+  const handleTwelveStringsInputChange = () => {
+    setTwelveStringsFilter((prevState) => !prevState);
+  };
+
+  const handleResetButtonClick = () => {
+    setAcoustic(false);
+    setElectro(false);
+    setUkulele(false);
+    setFourStringsFilter(false);
+    setSixStringsFilter(false);
+    setSevenStringsFilter(false);
+    setTwelveStringsFilter(false);
   };
 
   return (
@@ -125,38 +147,43 @@ function Filter() {
         <legend className="catalog-filter__block-title">Количество струн</legend>
         <div className="form-checkbox catalog-filter__block-item">
           <input
-            // onChange={}
+            onChange={handleFourStringsInputChange}
             className="visually-hidden" type="checkbox" id="4-strings" name="4-strings"
-            // checked={filter.stringsCount.four}
+            checked={fourStringsFilter}
           />
           <label htmlFor="4-strings">4</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input
-            // onChange={}
+            onChange={handleSixStringsInputChange}
             className="visually-hidden" type="checkbox" id="6-strings" name="6-strings"
-            // checked={filter.stringsCount.six}
+            checked={sixStringsFilter}
           />
           <label htmlFor="6-strings">6</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input
-            // onChange={}
+            onChange={handleSevenStringsInputChange}
             className="visually-hidden" type="checkbox" id="7-strings" name="7-strings"
-            // checked={filter.stringsCount.seven}
+            checked={sevenStringsFilter}
           />
           <label htmlFor="7-strings">7</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input
-            // onChange={}
+            onChange={handleTwelveStringsInputChange}
             className="visually-hidden" type="checkbox" id="12-strings" name="12-strings"
-            // checked={filter.stringsCount.twelve}
+            checked={twelveStringsFilter}
           />
           <label htmlFor="12-strings">12</label>
         </div>
       </fieldset>
-      <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset">Очистить</button>
+      <button
+        className="catalog-filter__reset-btn button button--black-border button--medium" type="reset"
+        onClick={handleResetButtonClick}
+      >
+        Очистить
+      </button>
     </form>
   );
 }

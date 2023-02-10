@@ -56,18 +56,20 @@ function Product(): JSX.Element {
               <Link onClick={() => setIsCharacteristics(true)} className={`button button--medium tabs__button ${isCharacteristics ? '' : 'button--black-border'}`} to="#description">Описание</Link>
               <div className="tabs__content" id="characteristics">
                 <table className={`tabs__table ${isCharacteristics ? 'hidden' : ''}`}>
-                  <tr className="tabs__table-row">
-                    <td className="tabs__title">Артикул:</td>
-                    <td className="tabs__value">{product?.sku}</td>
-                  </tr>
-                  <tr className="tabs__table-row">
-                    <td className="tabs__title">Тип:</td>
-                    <td className="tabs__value">{product?.guitarType}</td>
-                  </tr>
-                  <tr className="tabs__table-row">
-                    <td className="tabs__title">Количество струн:</td>
-                    <td className="tabs__value">{product?.stringsCount} струнная</td>
-                  </tr>
+                  <tbody>
+                    <tr className="tabs__table-row">
+                      <td className="tabs__title">Артикул:</td>
+                      <td className="tabs__value">{product?.sku}</td>
+                    </tr>
+                    <tr className="tabs__table-row">
+                      <td className="tabs__title">Тип:</td>
+                      <td className="tabs__value">{product?.guitarType}</td>
+                    </tr>
+                    <tr className="tabs__table-row">
+                      <td className="tabs__title">Количество струн:</td>
+                      <td className="tabs__value">{product?.stringsCount} струнная</td>
+                    </tr>
+                  </tbody>
                 </table>
                 <p className={`tabs__product-description ${isCharacteristics ? '' : 'hidden'}`}>{product?.description}</p>
               </div>

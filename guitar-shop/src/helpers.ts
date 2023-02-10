@@ -32,7 +32,8 @@ export const getQueryString = (args: QueryArguments | undefined) => {
     `${args.limit ? `_limit=${args.limit}` : ''}`,
     `${args.sort ? `_sort=${args.sort}` : `_sort=${SortType.Price}`}`,
     `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Asc}`}`,
-    `${args.guitarTypeFilter ? `${args.guitarTypeFilter}` : ''}`
+    `${args.guitarTypeFilter ? `${args.guitarTypeFilter}` : ''}`,
+    `${args.stringsCountFilter ? `${args.stringsCountFilter}` : ''}`
   ];
   const queryString = queryParams.every((param) => param === '') ? '' : `?${queryParams.join('&')}`;
   return queryString;

@@ -14,7 +14,7 @@ export type QueryArguments = {
   sort?: SortType;
   order?: SortOrder;
   guitarTypeFilter?: string;
-  stringsCountFilter?: StringsCount[];
+  stringsCountFilter?: string;
 };
 
 export type PriceFilter = {
