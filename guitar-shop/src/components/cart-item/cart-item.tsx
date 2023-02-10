@@ -1,3 +1,5 @@
+import {useAppDispatch} from '../../hooks';
+import {decreaseCartItemQuantity, deleteProductFromCart, increaseCartItemQuantity} from '../../store/app-data/app-data';
 import {CartItemType} from '../../types/common';
 
 type CartItemProps = {
@@ -5,14 +7,28 @@ type CartItemProps = {
 };
 
 function CartItem({cartItem}: CartItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handleIncButtonClick = () => {
+    dispatch(increaseCartItemQuantity(cartItem.product));
+  };
+
+  const handleDecButtonClick = () => {
+    dispatch(decreaseCartItemQuantity(cartItem.product));
+  };
+
+  const handleRemoveButtonClick = () => {
+    dispatch(deleteProductFromCart(cartItem.product));
+  };
+
   return (
     <div className="cart-item">
-      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
+      <button onClick={handleRemoveButtonClick} className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
         <span className="button-cross__icon"></span>
         <span className="cart-item__close-button-interactive-area"></span>
       </button>
       <div className="cart-item__image">
-        <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="55" height="130" alt="ЭлектроГитара Честер bass"/>
+        <img src={cartItem.product ? `${cartItem.product?.image}` : ''} srcSet="img/content/catalog-product-1@2x.png 2x" width="55" height="130" alt="ЭлектроГитара Честер bass"/>
       </div>
       <div className="product-info cart-item__info">
         <p className="product-info__title">ЭлектроГитара {cartItem.product?.title}</p>
@@ -21,13 +37,13 @@ function CartItem({cartItem}: CartItemProps): JSX.Element {
       </div>
       <div className="cart-item__price">{cartItem.product?.price.toLocaleString()} ₽</div>
       <div className="quantity cart-item__quantity">
-        <button className="quantity__button" aria-label="Уменьшить количество">
+        <button onClick={handleDecButtonClick} className="quantity__button" aria-label="Уменьшить количество">
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
         <input className="quantity__input" type="number" placeholder={cartItem.quantity.toString()} id="1-count" name="1-count" max="99"/>
-        <button className="quantity__button" aria-label="Увеличить количество">
+        <button onClick={handleIncButtonClick} className="quantity__button" aria-label="Увеличить количество">
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-plus"></use>
           </svg>

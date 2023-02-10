@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {useAppSelector} from '../../hooks';
+import {getCart} from '../../store/app-data/selectors';
 import {ProductDto} from '../../types/product.dto';
 import {useApppSelector} from '../app/app';
 
@@ -17,6 +19,10 @@ type ProductCardProps = {
 function ProductCard({product, setMainPageState}: ProductCardProps) {
   const authorizationStatus = useApppSelector();
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const cart = useAppSelector(getCart);
+  const cartProducts = cart.items.map((item) => item.product?.id);
+  const isProductInCart = cartProducts.includes(product.id);
 
   return (
     <div className="product-card">
@@ -40,19 +46,27 @@ function ProductCard({product, setMainPageState}: ProductCardProps) {
       </div>
       <div className="product-card__buttons">
         <Link className="button button--mini" to={`${AppRoute.Product}/${product.id}`}>Подробнее</Link>
-        <Link
-          to=""
-          /* меняем класс, если товар в корзине */
-          className="button button--red button--mini button--add-to-cart"
-          onClick={
-            () => setMainPageState({
-              isAddToCartModalOpened: isUserAuthorized,
-              isEnterModalOpened: !isUserAuthorized,
-              product: isUserAuthorized ? product : null
-            })
-          }
-        >Купить
-        </Link>
+        {
+          isProductInCart && isUserAuthorized
+            ? (
+              <Link to="/cart" className="button button--red-border button--mini button--in-cart">В корзине</Link>
+            )
+            : (
+              <Link
+                to=""
+                className="button button--red button--mini button--add-to-cart"
+                onClick={
+                  () => setMainPageState({
+                    isAddToCartModalOpened: isUserAuthorized,
+                    isEnterModalOpened: !isUserAuthorized,
+                    product: isUserAuthorized ? product : null
+                  })
+                }
+              >
+                Купить
+              </Link>
+            )
+        }
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ function Cart(): JSX.Element {
   // const dispatch = useAppDispatch();
 
   const cart = useAppSelector(getCart);
+  const totalCartPrice = cart.totalCartPrice;
 
   return (
     <main className="page-content">
@@ -34,8 +35,14 @@ function Cart(): JSX.Element {
           }
           <div className="cart__footer">
             <div className="cart__total-info">
-              <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span><span className="cart__total-value">52 000 ₽</span></p>
-              <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span><span className="cart__total-value cart__total-value--payment">52 000 ₽</span></p>
+              <p className="cart__total-item">
+                <span className="cart__total-value-name">Всего:</span>
+                <span className="cart__total-value">{totalCartPrice.toLocaleString()} ₽</span>
+              </p>
+              <p className="cart__total-item">
+                <span className="cart__total-value-name">К оплате:</span>
+                <span className="cart__total-value cart__total-value--payment">{totalCartPrice.toLocaleString()} ₽</span>
+              </p>
               <button className="button button--red button--big cart__order-button">Оформить заказ</button>
             </div>
           </div>

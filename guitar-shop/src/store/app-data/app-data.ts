@@ -60,7 +60,38 @@ export const appData = createSlice({
         quantity: 1,
         totalItemPrice: (action.payload as ProductDto).price
       });
-      state.cart.totalCartPrice = (action.payload as ProductDto).price;
+      state.cart.totalCartPrice = state.cart.totalCartPrice + (action.payload as ProductDto).price;
+    },
+    deleteProductFromCart: (state, action) => {
+      const productInTheState = state.cart.items.find((item) => item.product?.id === (action.payload as ProductDto).id);
+      if (productInTheState) {
+        state.cart.items = state.cart.items.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
+        state.cart.totalCartPrice = state.cart.totalCartPrice - productInTheState?.totalItemPrice;
+      }
+    },
+    increaseCartItemQuantity: (state, action) => {
+      const productInTheState = state.cart.items.find((item) => item.product?.id === (action.payload as ProductDto).id);
+      if (productInTheState) {
+        state.cart.items = state.cart.items.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
+        state.cart.items.push({
+          product: action.payload as ProductDto,
+          quantity: productInTheState.quantity + 1,
+          totalItemPrice: productInTheState.totalItemPrice + (action.payload as ProductDto).price
+        });
+        state.cart.totalCartPrice = state.cart.totalCartPrice + (action.payload as ProductDto).price;
+      }
+    },
+    decreaseCartItemQuantity: (state, action) => {
+      const productInTheState = state.cart.items.find((item) => item.product?.id === (action.payload as ProductDto).id);
+      if (productInTheState && productInTheState.quantity > 1) {
+        state.cart.items = state.cart.items.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
+        state.cart.items.push({
+          product: action.payload as ProductDto,
+          quantity: productInTheState.quantity - 1,
+          totalItemPrice: productInTheState.totalItemPrice - (action.payload as ProductDto).price
+        });
+        state.cart.totalCartPrice = state.cart.totalCartPrice - (action.payload as ProductDto).price;
+      }
     }
   },
   extraReducers(builder) {
@@ -93,5 +124,8 @@ export const {
   changeSortOrderAction,
   changeActivePageAction,
   setDataLoadedStatus,
-  putProductToCart
+  putProductToCart,
+  deleteProductFromCart,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity
 } = appData.actions;
