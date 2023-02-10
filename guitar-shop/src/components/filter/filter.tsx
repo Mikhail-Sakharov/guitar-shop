@@ -4,12 +4,13 @@ import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
 import {changeActivePageAction} from '../../store/app-data/app-data';
-import {getMaxPrice, getMinPrice, getSortOrder, getSortType} from '../../store/app-data/selectors';
+import {getActivePage, getMaxPrice, getMinPrice, getSortOrder, getSortType} from '../../store/app-data/selectors';
 import {GuitarType, StringsCount} from '../../types/common';
 
 function Filter() {
   const dispatch = useAppDispatch();
 
+  const activePage = useAppSelector(getActivePage);
   const sortType = useAppSelector(getSortType);
   const sortOrder = useAppSelector(getSortOrder);
   const minCurrentCatalogPrice = useAppSelector(getMinPrice);
@@ -44,9 +45,8 @@ function Filter() {
       sevenStringsFilter ? `stringsCount=${StringsCount.Seven}` : '',
       twelveStringsFilter ? `stringsCount=${StringsCount.Twelve}` : ''
     ].filter((type) => type !== '').join('&');
-    dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
     dispatch(fetchProductsAction({
-      page: DEFAULT_PAGE_NUMBER,
+      page: activePage,
       limit: PRODUCTS_LIMIT,
       sort: sortType,
       order: sortOrder,
@@ -97,6 +97,18 @@ function Filter() {
   };
 
   const handleResetButtonClick = () => {
+    [
+      !!minPrice,
+      !!maxPrice,
+      acoustic,
+      electro,
+      ukulele,
+      fourStringsFilter,
+      sixStringsFilter,
+      sevenStringsFilter,
+      twelveStringsFilter
+    ].includes(true)
+      && dispatch(changeActivePageAction(DEFAULT_PAGE_NUMBER));
     setMinPrice('');
     setMaxPrice('');
     setAcoustic(false);

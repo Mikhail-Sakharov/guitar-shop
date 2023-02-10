@@ -3,19 +3,18 @@ import {PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
 import {changeActivePageAction} from '../../store/app-data/app-data';
-import {getActivePage, getProductsCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
+import {getActivePage, getPagesCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 
 const MAX_PAGES_COUNT = 3;
 
 function Pagination() {
   const dispatch = useAppDispatch();
 
-  const productsCount = useAppSelector(getProductsCount);
   const sortType = useAppSelector(getSortType);
   const sortOrder = useAppSelector(getSortOrder);
   const activePage = useAppSelector(getActivePage);
 
-  const pagesCount = Math.ceil(productsCount / PRODUCTS_LIMIT);
+  const pagesCount = useAppSelector(getPagesCount);
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
 
   const handlePrevClick = () => {

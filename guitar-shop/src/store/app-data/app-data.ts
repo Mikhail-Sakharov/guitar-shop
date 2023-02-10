@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_PAGE_NUMBER, NameSpace} from '../../const';
+import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
@@ -9,6 +9,7 @@ type InitalState = {
   products: ProductDto[];
   productsCount: number;
   activePage: number;
+  pagesCount: number;
   sortType: SortType;
   sortOrder: SortOrder;
   minPrice: number;
@@ -21,6 +22,7 @@ const initialState: InitalState = {
   products: [],
   productsCount: 0,
   activePage: DEFAULT_PAGE_NUMBER,
+  pagesCount: 0,
   sortType: SortType.Price,
   sortOrder: SortOrder.Asc,
   minPrice: 100,
@@ -46,6 +48,11 @@ export const appData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchProductsAction.fulfilled, (state, action) => {
+        const currentQueryPagesCount = Math.ceil(action.payload[1] / PRODUCTS_LIMIT);
+        state.pagesCount = currentQueryPagesCount;
+        if (state.activePage > currentQueryPagesCount) {
+          state.activePage = currentQueryPagesCount;
+        }
         state.products = action.payload[0];
         state.productsCount = action.payload[1];
         state.minPrice = action.payload[2];
