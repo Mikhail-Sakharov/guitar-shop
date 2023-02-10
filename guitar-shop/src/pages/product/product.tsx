@@ -1,24 +1,54 @@
 import {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
+import {useApppSelector} from '../../components/app/app';
+import EnterModal from '../../components/modals/enter-modal/enter-modal';
+import ReviewFormModal from '../../components/modals/review-form-modal/review-form-modal';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
-import {MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchReviewsAction, fetchProductAction} from '../../store/api-actons';
-import {getProduct} from '../../store/app-data/selectors';
+import {putProductToCart, setDataLoadedStatus} from '../../store/app-data/app-data';
+import {getCart, getProduct} from '../../store/app-data/selectors';
+
+type ProductPageState = {
+  isEnterModalOpened?: boolean;
+  isReviewFormModalOpened?: boolean;
+};
 
 function Product(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [isCharacteristics, setIsCharacteristics] = useState(false);
-
   const productId = Number(useParams().id);
+  const product = useAppSelector(getProduct);
+
+  const authorizationStatus = useApppSelector();
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const cart = useAppSelector(getCart);
+  const cartProducts = cart.items.map((item) => item.product?.id);
+  const isProductInCart = cartProducts.includes(productId);
+
+  const [isCharacteristics, setIsCharacteristics] = useState(false);
+  const productPageInitialState: ProductPageState = {
+    isEnterModalOpened: false,
+    isReviewFormModalOpened: false
+  };
+  const [productPageState, setProductPageState] = useState(productPageInitialState);
 
   useEffect(() => {
+    dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductAction(productId));
     dispatch(fetchReviewsAction(productId));
   }, [dispatch, productId]);
 
-  const product = useAppSelector(getProduct);
+  const handleAddButtonClick = () => {
+    if (isUserAuthorized) {
+      dispatch(putProductToCart(product));
+    }
+    setProductPageState({
+      isEnterModalOpened: !isUserAuthorized
+    });
+  };
 
   return (
     <main className="page-content">
@@ -78,10 +108,33 @@ function Product(): JSX.Element {
           <div className="product-container__price-wrapper">
             <p className="product-container__price-info product-container__price-info--title">Цена:</p>
             <p className="product-container__price-info product-container__price-info--value">{product?.price.toLocaleString()} ₽</p>
-            <Link className="button button--red button--big product-container__button" to="#">Добавить в корзину</Link>
+            {
+              isProductInCart && isUserAuthorized
+                ? (
+                  <Link
+                    className="button button--red-border button--big product-container__button" to="/cart"
+                  >
+                    В корзине
+                  </Link>
+                )
+                : (
+                  <Link
+                    onClick={handleAddButtonClick}
+                    className="button button--red button--big product-container__button" to="#"
+                  >
+                    Добавить в корзину
+                  </Link>
+                )
+            }
           </div>
         </div>
-        <ReviewsSection />
+        <ReviewsSection setProductPageState={setProductPageState}/>
+        {
+          productPageState.isEnterModalOpened && <EnterModal setMainPageState={setProductPageState}/>
+        }
+        {
+          productPageState.isReviewFormModalOpened && <ReviewFormModal product={product} setProductPageState={setProductPageState}/>
+        }
       </div>
     </main>
   );

@@ -1,4 +1,29 @@
-function ReviewFormModal(): JSX.Element {
+import {FormEvent} from 'react';
+import {ProductDto} from '../../../types/product.dto';
+
+type ProductPageState = {
+  isReviewFormModalOpened?: boolean;
+};
+
+type ReviewFormModalProps = {
+  product: ProductDto | null;
+  setProductPageState: (state: ProductPageState) => void;
+};
+
+function ReviewFormModal({product, setProductPageState}: ReviewFormModalProps): JSX.Element {
+  const handleSubmitButtonClick = (evt: FormEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    setProductPageState({
+      isReviewFormModalOpened: false
+    });
+  };
+
+  const handleCloseButtonClick = () => {
+    setProductPageState({
+      isReviewFormModalOpened: false
+    });
+  };
+
   return (
     <div style={{position: 'relative', width: '550px', height: '610px', marginBottom: '50px'}}>
       <div className="modal is-active modal--review modal-for-ui-kit">
@@ -8,7 +33,7 @@ function ReviewFormModal(): JSX.Element {
             <h2 className="modal__header modal__header--review title title--medium">Оставить отзыв</h2>
             <form className="form-review">
               <div className="form-review__wrapper">
-                <h3 className="form-review__title">СURT Z30 Plus</h3>
+                <h3 className="form-review__title">{product?.title}</h3>
                 <div>
                   <span className="form-review__label form-review__label--required form-review__label--star">Ваша Оценка</span>
                   <div className="rate rate--reverse">
@@ -35,9 +60,17 @@ function ReviewFormModal(): JSX.Element {
               <label className="form-review__label form-review__label--required form-review__label--textarea" htmlFor="comment">Комментарий</label>
               <textarea className="form-review__input form-review__input--textarea" id="comment" autoComplete="off"></textarea>
               <p className="form-review__warning">Заполните поле</p>
-              <button className="button button--medium-20 form-review__button" type="submit">Отправить отзыв</button>
+              <button
+                onClick={handleSubmitButtonClick}
+                className="button button--medium-20 form-review__button" type="submit"
+              >
+                Отправить отзыв
+              </button>
             </form>
-            <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть">
+            <button
+              onClick={handleCloseButtonClick}
+              className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
+            >
               <span className="button-cross__icon"></span>
               <span className="modal__close-btn-interactive-area"></span>
             </button>
