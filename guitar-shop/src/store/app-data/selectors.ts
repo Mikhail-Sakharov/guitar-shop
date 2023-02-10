@@ -15,3 +15,5 @@ export const getSortType = (state: State): SortType => state[NameSpace.Data].sor
 export const getSortOrder = (state: State): SortOrder => state[NameSpace.Data].sortOrder;
 export const getActivePage = (state: State): number => state[NameSpace.Data].activePage;
 export const getPagesCount = (state: State): number => state[NameSpace.Data].pagesCount;
+
+export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].dataLoadedStatus;

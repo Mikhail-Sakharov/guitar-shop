@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
-import {changeActivePageAction} from '../../store/app-data/app-data';
+import {changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getActivePage, getPagesCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 
 const MAX_PAGES_COUNT = 3;
@@ -18,16 +18,19 @@ function Pagination() {
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
 
   const handlePrevClick = () => {
+    dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(activePage - 1));
   };
 
   const handlePageClick = (pageNumber: number) => {
+    dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(pageNumber));
   };
 
   const handleNextClick = () => {
+    dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
     dispatch(changeActivePageAction(activePage + 1));
   };

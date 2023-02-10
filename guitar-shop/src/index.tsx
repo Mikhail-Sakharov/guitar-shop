@@ -7,8 +7,10 @@ import HistoryRouter from './components/history-router/history-router';
 import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from './const';
 import {store} from './store';
 import {fetchProductsAction} from './store/api-actons';
+import {setDataLoadedStatus} from './store/app-data/app-data';
 
 store.dispatch(fetchProductsAction({page: DEFAULT_PAGE_NUMBER, limit: PRODUCTS_LIMIT}));
+store.dispatch(setDataLoadedStatus(true));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

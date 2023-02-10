@@ -3,7 +3,7 @@ import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
 import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
-import {changeActivePageAction} from '../../store/app-data/app-data';
+import {changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getActivePage, getMaxPrice, getMinPrice, getSortOrder, getSortType} from '../../store/app-data/selectors';
 import {GuitarType, StringsCount} from '../../types/common';
 
@@ -32,6 +32,7 @@ function Filter() {
   const [twelveStringsFilter, setTwelveStringsFilter] = useState(false);
 
   useEffect(() => {
+    dispatch(setDataLoadedStatus(true));
     const minPriceFilter = minPrice !== '' ? `price_gte=${minPrice}` : '';
     const maxPriceFilter = maxPrice !== '' ? `price_lte=${maxPrice}` : '';
     const guitarTypeFilter = [

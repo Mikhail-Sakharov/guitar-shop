@@ -6,6 +6,7 @@ import {ReviewDto} from '../../types/review.dto';
 import {fetchReviewsAction, fetchProductAction, fetchProductsAction} from '../api-actons';
 
 type InitalState = {
+  dataLoadedStatus: boolean;
   products: ProductDto[];
   productsCount: number;
   activePage: number;
@@ -19,6 +20,7 @@ type InitalState = {
 }
 
 const initialState: InitalState = {
+  dataLoadedStatus: false,
   products: [],
   productsCount: 0,
   activePage: DEFAULT_PAGE_NUMBER,
@@ -43,6 +45,9 @@ export const appData = createSlice({
     },
     changeActivePageAction: (state, action) => {
       state.activePage = action.payload as number;
+    },
+    setDataLoadedStatus: (state, action) => {
+      state.dataLoadedStatus = action.payload as boolean;
     }
   },
   extraReducers(builder) {
@@ -57,14 +62,17 @@ export const appData = createSlice({
         state.productsCount = action.payload[1];
         state.minPrice = action.payload[2];
         state.maxPrice = action.payload[3];
+        state.dataLoadedStatus = false;
       })
       .addCase(fetchProductAction.fulfilled, (state, action) => {
         state.product = action.payload;
+        state.dataLoadedStatus = false;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+        state.dataLoadedStatus = false;
       });
   }
 });
 
-export const {changeSortTypeAction, changeSortOrderAction, changeActivePageAction} = appData.actions;
+export const {changeSortTypeAction, changeSortOrderAction, changeActivePageAction, setDataLoadedStatus} = appData.actions;
