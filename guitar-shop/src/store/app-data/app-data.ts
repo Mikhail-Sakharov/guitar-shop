@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
-import {SortType, SortOrder} from '../../types/common';
+import {SortType, SortOrder, CartType} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
 import {fetchReviewsAction, fetchProductAction, fetchProductsAction} from '../api-actons';
@@ -17,6 +17,7 @@ type InitalState = {
   maxPrice: number;
   product: ProductDto | null;
   reviews: ReviewDto[];
+  cart: CartType;
 }
 
 const initialState: InitalState = {
@@ -30,7 +31,11 @@ const initialState: InitalState = {
   minPrice: 100,
   maxPrice: 1000000,
   product: null,
-  reviews: []
+  reviews: [],
+  cart: {
+    items: [],
+    totalCartPrice: 0
+  }
 };
 
 export const appData = createSlice({
@@ -48,6 +53,14 @@ export const appData = createSlice({
     },
     setDataLoadedStatus: (state, action) => {
       state.dataLoadedStatus = action.payload as boolean;
+    },
+    putProductToCart: (state, action) => {
+      state.cart.items.push({
+        product: action.payload as ProductDto,
+        quantity: 1,
+        totalItemPrice: (action.payload as ProductDto).price
+      });
+      state.cart.totalCartPrice = (action.payload as ProductDto).price;
     }
   },
   extraReducers(builder) {
@@ -75,4 +88,10 @@ export const appData = createSlice({
   }
 });
 
-export const {changeSortTypeAction, changeSortOrderAction, changeActivePageAction, setDataLoadedStatus} = appData.actions;
+export const {
+  changeSortTypeAction,
+  changeSortOrderAction,
+  changeActivePageAction,
+  setDataLoadedStatus,
+  putProductToCart
+} = appData.actions;

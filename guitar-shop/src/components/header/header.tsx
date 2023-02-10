@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 
 function Header() {
   return (
-    <header className="header" id="header">
+    <header className="header--logged header" id="header">
       <div className="container">
         <div className="header__wrapper">
           <Link to="/" className="header__logo logo">

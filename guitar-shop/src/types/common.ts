@@ -1,3 +1,5 @@
+import {ProductDto} from './product.dto';
+
 export enum SortType {
   Price = 'price',
   Rating = 'rating'
@@ -36,3 +38,14 @@ export enum StringsCount {
   Seven = 7,
   Twelve = 12
 }
+
+export type CartItemType = {
+  product: ProductDto | null;
+  quantity: number;
+  totalItemPrice: number;
+};
+
+export type CartType = {
+  items: CartItemType[];
+  totalCartPrice: number;
+};

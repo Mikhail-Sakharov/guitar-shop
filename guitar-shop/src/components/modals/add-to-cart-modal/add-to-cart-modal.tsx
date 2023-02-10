@@ -1,3 +1,5 @@
+import {useAppDispatch} from '../../../hooks';
+import {putProductToCart} from '../../../store/app-data/app-data';
 import {ProductDto} from '../../../types/product.dto';
 
 type MainPageState = {
@@ -12,11 +14,11 @@ type AddToCartModalProps = {
 };
 
 function AddToCartModal({product, setMainPageState}: AddToCartModalProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const handleAddButtonClick = () => {
     setMainPageState({isAddToCartModalOpened: false, isSuccessAddModalOpened: false, product: null});
-    // await диспатч асинх действия добавления в корзину
-    // обновить состояние корзины (перейдёт в асинх диспатч)
+    dispatch(putProductToCart(product));
     setMainPageState({isAddToCartModalOpened: false, isSuccessAddModalOpened: true, product: null});
   };
 
