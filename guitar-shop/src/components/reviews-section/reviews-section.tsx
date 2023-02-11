@@ -64,7 +64,12 @@ function ReviewsSection({setProductPageState}: ReviewsSectionProps): JSX.Element
             </button>
           )
       }
-      <Link className="button button--up button--red-border button--big reviews__up-button" to="#header">Наверх</Link>
+      <Link
+        onClick={() => window.scrollTo(0, 0)}
+        className="button button--up button--red-border button--big reviews__up-button" to="#header"
+      >
+        Наверх
+      </Link>
     </section>
   );
 }

@@ -38,7 +38,6 @@ function Product(): JSX.Element {
   useEffect(() => {
     dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductAction(productId));
-    // dispatch(fetchReviewsAction({productId}));
   }, [dispatch, productId]);
 
   const handleAddButtonClick = () => {
