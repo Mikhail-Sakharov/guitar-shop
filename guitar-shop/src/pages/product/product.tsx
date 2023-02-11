@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useApppSelector} from '../../components/app/app';
 import EnterModal from '../../components/modals/enter-modal/enter-modal';
+import SendReviewModal from '../../components/modals/modal-success-review/send-review-modal';
 import ReviewFormModal from '../../components/modals/review-form-modal/review-form-modal';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
@@ -13,6 +14,7 @@ import {getCart, getProduct} from '../../store/app-data/selectors';
 type ProductPageState = {
   isEnterModalOpened?: boolean;
   isReviewFormModalOpened?: boolean;
+  isSendReviewModalOpened?: boolean;
 };
 
 function Product(): JSX.Element {
@@ -31,7 +33,8 @@ function Product(): JSX.Element {
   const [isCharacteristics, setIsCharacteristics] = useState(false);
   const productPageInitialState: ProductPageState = {
     isEnterModalOpened: false,
-    isReviewFormModalOpened: false
+    isReviewFormModalOpened: false,
+    isSendReviewModalOpened: false
   };
   const [productPageState, setProductPageState] = useState(productPageInitialState);
 
@@ -133,6 +136,9 @@ function Product(): JSX.Element {
         }
         {
           productPageState.isReviewFormModalOpened && <ReviewFormModal product={product} setProductPageState={setProductPageState}/>
+        }
+        {
+          productPageState.isSendReviewModalOpened && <SendReviewModal setProductPageState={setProductPageState}/>
         }
       </div>
     </main>
