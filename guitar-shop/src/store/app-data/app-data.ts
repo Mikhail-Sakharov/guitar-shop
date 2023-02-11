@@ -3,7 +3,7 @@ import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
-import {fetchReviewsAction, fetchProductAction, fetchProductsAction} from '../api-actons';
+import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction} from '../api-actons';
 
 type InitalState = {
   dataLoadedStatus: boolean;
@@ -133,6 +133,23 @@ export const appData = createSlice({
           state.dataLoadedStatus = false;
         }
         state.currentQueryReviewsCount = action.payload.length;
+      })
+      .addCase(postCommentAction.fulfilled, (state, action) => {
+        const currentReceivedReviews = [action.payload];
+        const currentStateReviews = state.reviews;
+        const isReceivedReviewsEmpty = currentReceivedReviews.length === 0;
+        const isStateReviewsEmpty = state.reviews.length === 0;
+        if (!isReceivedReviewsEmpty && isStateReviewsEmpty) {
+          state.reviews = currentReceivedReviews;
+        } else if (!isReceivedReviewsEmpty && currentStateReviews[0].productId !== currentReceivedReviews[0].productId) {
+          state.reviews = currentReceivedReviews;
+        } else {
+          const currentStateReviewsIds = currentStateReviews.map((review) => review.id);
+          const filteredReceivedReviews = currentReceivedReviews.filter((receivedReview) => !currentStateReviewsIds.includes(receivedReview.id));
+          state.reviews.unshift(...filteredReceivedReviews);
+          state.dataLoadedStatus = false;
+        }
+        state.currentQueryReviewsCount = currentReceivedReviews.length;
       });
   }
 });

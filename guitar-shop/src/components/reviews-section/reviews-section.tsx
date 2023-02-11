@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -12,10 +12,12 @@ type ProductPageState = {
 };
 
 type ReviewsSectionProps = {
+  currentReviewsPage: number;
+  setCurrentReviewsPage: (page: number) => void;
   setProductPageState: (state: ProductPageState) => void;
 };
 
-function ReviewsSection({setProductPageState}: ReviewsSectionProps): JSX.Element {
+function ReviewsSection({currentReviewsPage, setCurrentReviewsPage, setProductPageState}: ReviewsSectionProps): JSX.Element {
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
   const currentQueryReviewsCount = useAppSelector(getCurrentQueryReviewsCount);
@@ -25,14 +27,12 @@ function ReviewsSection({setProductPageState}: ReviewsSectionProps): JSX.Element
   const authorizationStatus = useApppSelector();
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
-  const [currentReviewsPage, setCurrentReviewsPage] = useState(1);
-
   useEffect(() => {
     dispatch(fetchReviewsAction({productId, page: currentReviewsPage}));
   }, [currentReviewsPage, dispatch, productId]);
 
   const handleMoreReviewsButton = () => {
-    setCurrentReviewsPage((prevState) => prevState + 1);
+    setCurrentReviewsPage(currentReviewsPage + 1);
   };
 
   return (

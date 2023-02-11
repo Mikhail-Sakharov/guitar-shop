@@ -6,11 +6,18 @@ type ProductPageState = {
 };
 
 type SendReviewModalProps = {
+  currentReviewsPage: number;
+  setCurrentReviewsPage: (page: number) => void;
   setProductPageState: (state: ProductPageState) => void;
 };
 
-function SendReviewModal({setProductPageState}: SendReviewModalProps): JSX.Element {
+function SendReviewModal({currentReviewsPage, setCurrentReviewsPage, setProductPageState}: SendReviewModalProps): JSX.Element {
   const navigate = useNavigate();
+
+  const handleCloseButtonClick = () => {
+    setProductPageState({isSendReviewModalOpened: false});
+    setCurrentReviewsPage(currentReviewsPage + 1);
+  };
   return (
     <div style={{position: 'relative', width: '550px', height: '410px', marginBottom: '50px'}}>
       <div className="modal is-active modal--success modal-for-ui-kit">
@@ -30,7 +37,7 @@ function SendReviewModal({setProductPageState}: SendReviewModalProps): JSX.Eleme
               </button>
             </div>
             <button
-              onClick={() => setProductPageState({isSendReviewModalOpened: false})}
+              onClick={handleCloseButtonClick}
               className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
             >
               <span className="button-cross__icon"></span>

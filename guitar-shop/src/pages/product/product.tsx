@@ -37,6 +37,7 @@ function Product(): JSX.Element {
     isSendReviewModalOpened: false
   };
   const [productPageState, setProductPageState] = useState(productPageInitialState);
+  const [currentReviewsPage, setCurrentReviewsPage] = useState(1);
 
   useEffect(() => {
     dispatch(setDataLoadedStatus(true));
@@ -130,7 +131,11 @@ function Product(): JSX.Element {
             }
           </div>
         </div>
-        <ReviewsSection setProductPageState={setProductPageState}/>
+        <ReviewsSection
+          currentReviewsPage={currentReviewsPage}
+          setCurrentReviewsPage={setCurrentReviewsPage}
+          setProductPageState={setProductPageState}
+        />
         {
           productPageState.isEnterModalOpened && <EnterModal setMainPageState={setProductPageState}/>
         }
@@ -138,7 +143,7 @@ function Product(): JSX.Element {
           productPageState.isReviewFormModalOpened && <ReviewFormModal product={product} setProductPageState={setProductPageState}/>
         }
         {
-          productPageState.isSendReviewModalOpened && <SendReviewModal setProductPageState={setProductPageState}/>
+          productPageState.isSendReviewModalOpened && <SendReviewModal currentReviewsPage={currentReviewsPage} setCurrentReviewsPage={setCurrentReviewsPage} setProductPageState={setProductPageState}/>
         }
       </div>
     </main>

@@ -1,7 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {APIRoute} from '../const';
-import {getQueryString, getReviewsQueryString} from '../helpers';
+import {getQueryString, getRandom, getReviewsQueryString} from '../helpers';
+import {CommentRequestBody} from '../types/comment-request-body';
 import {GetReviewsQueryArguments, QueryArguments} from '../types/common';
 import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
@@ -51,10 +52,27 @@ export const fetchReviewsAction = createAsyncThunk<ReviewDto[], GetReviewsQueryA
   'data/fetchReviews',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<ReviewDto[]>(`${APIRoute.Reviews}${getReviewsQueryString(_arg)}`);
-    // const comments = await api.get<ReviewDto[]>(`${APIRoute.Reviews}?productId=${_arg.productId}`);
-    /* console.log(`Всего: ${comments.data.length}`);
-    console.log(`За один запрос: ${data.length}`);
-    console.log(`Номер страницы: ${_arg.page ? _arg.page : 'не определено'}`); */
+    return data;
+  },
+);
+
+export const postCommentAction = createAsyncThunk<ReviewDto, CommentRequestBody, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/postComment',
+  async (commentRequestBody, {dispatch, extra: api}) => {
+    const transformedReqBody = {
+      id: Number(new Date()) * getRandom(0, 5) + getRandom(0, 99),
+      createdAt: new Date().toISOString(),
+      user: {
+        firstName: 'Михаил',
+        lastName: 'Сахаров'
+      },
+      ...commentRequestBody
+    };
+    const {data} = await api.post<ReviewDto>(APIRoute.Reviews, transformedReqBody);
     return data;
   },
 );

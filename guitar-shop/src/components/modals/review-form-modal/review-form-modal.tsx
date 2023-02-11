@@ -1,4 +1,6 @@
 import {FormEvent, useEffect, useState} from 'react';
+import {useAppDispatch} from '../../../hooks';
+import {postCommentAction} from '../../../store/api-actons';
 import {ProductDto} from '../../../types/product.dto';
 
 type ProductPageState = {
@@ -12,6 +14,8 @@ type ReviewFormModalProps = {
 };
 
 function ReviewFormModal({product, setProductPageState}: ReviewFormModalProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const [rating, setRating] = useState(0);
   const [advantages, setAdvantages] = useState('');
   const [disadvantages, setDisadvantages] = useState('');
@@ -92,16 +96,18 @@ function ReviewFormModal({product, setProductPageState}: ReviewFormModalProps): 
 
   const handleSubmitButtonClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    if (formValid) {
+    if (formValid && product) {
       setProductPageState({
         isReviewFormModalOpened: false,
         isSendReviewModalOpened: true
       });
-
-      // console.log(rating);
-      // console.log(advantages);
-      // console.log(disadvantages);
-      // console.log(comment);
+      dispatch(postCommentAction({
+        productId: product.id,
+        advantages,
+        disadvantages,
+        text: comment,
+        rating
+      }));
     }
     setAdvantagesInputUsed(true);
     setDisadvantagesInputUsed(true);
