@@ -1,4 +1,4 @@
-import {SortOrder, QueryArguments, SortType} from './types/common';
+import {SortOrder, QueryArguments, SortType, GetReviewsQueryArguments} from './types/common';
 
 export const getRandom = (min: number, max: number) => {
   [min, max] = [Math.abs(min), Math.abs(max)];
@@ -36,6 +36,19 @@ export const getQueryString = (args: QueryArguments | undefined) => {
     `${args.maxPriceFilter ? args.maxPriceFilter : ''}`,
     `${args.guitarTypeFilter ? `${args.guitarTypeFilter}` : ''}`,
     `${args.stringsCountFilter ? `${args.stringsCountFilter}` : ''}`
+  ];
+  const queryString = `?${queryParams.filter((param) => param !== '').join('&')}`;
+  return queryString;
+};
+
+export const getReviewsQueryString = (args: GetReviewsQueryArguments) => {
+  if (!args) {return '';}
+  const queryParams = [
+    `productId=${args.productId}`,
+    `${args.page ? `_page=${args.page}` : '_page=1'}`,
+    `${args.limit ? `_limit=${args.limit}` : '_limit=3'}`,
+    `${args.sort ? `_sort=${args.sort}` : '_sort=createdAt'}`,
+    `${args.order ? `_order=${args.order}` : `_order=${SortOrder.Desc}`}`
   ];
   const queryString = `?${queryParams.filter((param) => param !== '').join('&')}`;
   return queryString;

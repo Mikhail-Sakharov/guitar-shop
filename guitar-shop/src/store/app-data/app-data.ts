@@ -17,6 +17,7 @@ type InitalState = {
   maxPrice: number;
   product: ProductDto | null;
   reviews: ReviewDto[];
+  currentQueryReviewsCount: number;
   cart: CartType;
 }
 
@@ -32,6 +33,7 @@ const initialState: InitalState = {
   maxPrice: 1000000,
   product: null,
   reviews: [],
+  currentQueryReviewsCount: 0,
   cart: {
     items: [],
     totalCartPrice: 0
@@ -92,6 +94,9 @@ export const appData = createSlice({
         });
         state.cart.totalCartPrice = state.cart.totalCartPrice - (action.payload as ProductDto).price;
       }
+    },
+    clearReviews: (state, action) => {
+      state.reviews = action.payload as ReviewDto[];
     }
   },
   extraReducers(builder) {
@@ -113,8 +118,21 @@ export const appData = createSlice({
         state.dataLoadedStatus = false;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
-        state.dataLoadedStatus = false;
+        const currentReceivedReviews = action.payload;
+        const currentStateReviews = state.reviews;
+        const isReceivedReviewsEmpty = action.payload.length === 0;
+        const isStateReviewsEmpty = state.reviews.length === 0;
+        if (!isReceivedReviewsEmpty && isStateReviewsEmpty) {
+          state.reviews = action.payload;
+        } else if (!isReceivedReviewsEmpty && currentStateReviews[0].productId !== currentReceivedReviews[0].productId) {
+          state.reviews = action.payload;
+        } else {
+          const currentStateReviewsIds = currentStateReviews.map((review) => review.id);
+          const filteredReceivedReviews = currentReceivedReviews.filter((receivedReview) => !currentStateReviewsIds.includes(receivedReview.id));
+          state.reviews.push(...filteredReceivedReviews);
+          state.dataLoadedStatus = false;
+        }
+        state.currentQueryReviewsCount = action.payload.length;
       });
   }
 });
@@ -127,5 +145,6 @@ export const {
   putProductToCart,
   deleteProductFromCart,
   increaseCartItemQuantity,
-  decreaseCartItemQuantity
+  decreaseCartItemQuantity,
+  clearReviews
 } = appData.actions;

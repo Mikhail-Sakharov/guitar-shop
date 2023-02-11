@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {APIRoute} from '../const';
-import {getQueryString} from '../helpers';
-import {QueryArguments} from '../types/common';
+import {getQueryString, getReviewsQueryString} from '../helpers';
+import {GetReviewsQueryArguments, QueryArguments} from '../types/common';
 import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
@@ -43,14 +43,18 @@ export const fetchProductAction = createAsyncThunk<ProductDto, number, {
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<ReviewDto[], number, {
+export const fetchReviewsAction = createAsyncThunk<ReviewDto[], GetReviewsQueryArguments, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchReviews',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<ReviewDto[]>(`${APIRoute.Reviews}?productId=${_arg}`);
+    const {data} = await api.get<ReviewDto[]>(`${APIRoute.Reviews}${getReviewsQueryString(_arg)}`);
+    // const comments = await api.get<ReviewDto[]>(`${APIRoute.Reviews}?productId=${_arg.productId}`);
+    /* console.log(`Всего: ${comments.data.length}`);
+    console.log(`За один запрос: ${data.length}`);
+    console.log(`Номер страницы: ${_arg.page ? _arg.page : 'не определено'}`); */
     return data;
   },
 );

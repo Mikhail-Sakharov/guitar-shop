@@ -9,6 +9,7 @@ export const getMinPrice = (state: State): number => state[NameSpace.Data].minPr
 export const getMaxPrice = (state: State): number => state[NameSpace.Data].maxPrice;
 export const getProduct = (state: State): ProductDto | null => state[NameSpace.Data].product;
 export const getReviews = (state: State): ReviewDto[] => state[NameSpace.Data].reviews;
+export const getCurrentQueryReviewsCount = (state: State): number => state[NameSpace.Data].currentQueryReviewsCount;
 export const getProductsCount = (state: State): number => state[NameSpace.Data].productsCount;
 
 export const getSortType = (state: State): SortType => state[NameSpace.Data].sortType;

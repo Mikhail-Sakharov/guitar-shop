@@ -21,6 +21,14 @@ export type QueryArguments = {
   stringsCountFilter?: string;
 };
 
+export type GetReviewsQueryArguments = {
+  productId: number;
+  page?: number;
+  limit?: number;
+  sort?: SortType;
+  order?: SortOrder;
+};
+
 export type PriceFilter = {
   minPrice: number;
   maxPrice: number;

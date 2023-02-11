@@ -6,7 +6,7 @@ import ReviewFormModal from '../../components/modals/review-form-modal/review-fo
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchReviewsAction, fetchProductAction} from '../../store/api-actons';
+import {fetchProductAction} from '../../store/api-actons';
 import {putProductToCart, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCart, getProduct} from '../../store/app-data/selectors';
 
@@ -38,7 +38,7 @@ function Product(): JSX.Element {
   useEffect(() => {
     dispatch(setDataLoadedStatus(true));
     dispatch(fetchProductAction(productId));
-    dispatch(fetchReviewsAction(productId));
+    // dispatch(fetchReviewsAction({productId}));
   }, [dispatch, productId]);
 
   const handleAddButtonClick = () => {
