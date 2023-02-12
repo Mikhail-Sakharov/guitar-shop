@@ -36,3 +36,5 @@ export const MAX_RATING_STARS_COUNT = 5;
 export const DEFAULT_PAGE_NUMBER = 1;
 
 export const PRODUCTS_LIMIT = 9;
+
+export const FILTER_QUERY_DELAY = 1000;

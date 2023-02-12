@@ -1,6 +1,7 @@
 import {FormEvent, useEffect, useState} from 'react';
 import {useAppDispatch} from '../../../hooks';
 import {postCommentAction} from '../../../store/api-actons';
+import {setDataLoadedStatus} from '../../../store/app-data/app-data';
 import {ProductDto} from '../../../types/product.dto';
 
 type ProductPageState = {
@@ -101,6 +102,7 @@ function ReviewFormModal({product, setProductPageState}: ReviewFormModalProps): 
         isReviewFormModalOpened: false,
         isSendReviewModalOpened: true
       });
+      dispatch(setDataLoadedStatus(true));
       dispatch(postCommentAction({
         productId: product.id,
         advantages,

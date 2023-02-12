@@ -1,8 +1,17 @@
 import {Link} from 'react-router-dom';
+import {AuthorizationStatus} from '../../const';
+import {useAppSelector} from '../../hooks';
+import {getCart} from '../../store/app-data/selectors';
+import {useApppSelector} from '../app/app';
 
 function Header() {
+  const authorizationStatus = useApppSelector(); // временный фейковый селектор !
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const cart = useAppSelector(getCart);
+
   return (
-    <header className="header--logged header" id="header">
+    <header className={`header ${isUserAuthorized ? 'header--logged' : ''}`} id="header">
       <div className="container">
         <div className="header__wrapper">
           <Link to="/" className="header__logo logo">
@@ -33,7 +42,11 @@ function Header() {
               <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-basket"></use>
               </svg>
-              <span className="header__cart-count">2</span>
+              {
+                cart.items.length !== 0
+                  &&
+                <span className="header__cart-count">{cart.items.length}</span>
+              }
             </Link>
           </div>
         </div>

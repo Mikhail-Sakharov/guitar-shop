@@ -1,11 +1,9 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import CartItem from '../../components/cart-item/cart-item';
-import {/* useAppDispatch,  */useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {getCart} from '../../store/app-data/selectors';
 
 function Cart(): JSX.Element {
-  // const dispatch = useAppDispatch();
-
   const cart = useAppSelector(getCart);
   const totalCartPrice = cart.totalCartPrice;
 

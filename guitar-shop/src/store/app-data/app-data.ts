@@ -72,26 +72,40 @@ export const appData = createSlice({
       }
     },
     increaseCartItemQuantity: (state, action) => {
-      const productInTheState = state.cart.items.find((item) => item.product?.id === (action.payload as ProductDto).id);
+      const stateCartItems = state.cart.items;
+      const index = stateCartItems.findIndex((item) => item.product?.id === (action.payload as ProductDto).id);
+      const productInTheState = stateCartItems[index];
       if (productInTheState) {
-        state.cart.items = state.cart.items.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
-        state.cart.items.push({
+        const updatedItem = {
           product: action.payload as ProductDto,
           quantity: productInTheState.quantity + 1,
           totalItemPrice: productInTheState.totalItemPrice + (action.payload as ProductDto).price
-        });
+        };
+        const filteredItems = stateCartItems.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
+        state.cart.items = [
+          ...filteredItems.slice(0, index),
+          updatedItem,
+          ...filteredItems.slice(index)
+        ];
         state.cart.totalCartPrice = state.cart.totalCartPrice + (action.payload as ProductDto).price;
       }
     },
     decreaseCartItemQuantity: (state, action) => {
-      const productInTheState = state.cart.items.find((item) => item.product?.id === (action.payload as ProductDto).id);
+      const stateCartItems = state.cart.items;
+      const index = stateCartItems.findIndex((item) => item.product?.id === (action.payload as ProductDto).id);
+      const productInTheState = stateCartItems[index];
       if (productInTheState && productInTheState.quantity > 1) {
-        state.cart.items = state.cart.items.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
-        state.cart.items.push({
+        const updatedItem = {
           product: action.payload as ProductDto,
           quantity: productInTheState.quantity - 1,
           totalItemPrice: productInTheState.totalItemPrice - (action.payload as ProductDto).price
-        });
+        };
+        const filteredItems = stateCartItems.filter((item) => item.product?.id !== (action.payload as ProductDto).id);
+        state.cart.items = [
+          ...filteredItems.slice(0, index),
+          updatedItem,
+          ...filteredItems.slice(index)
+        ];
         state.cart.totalCartPrice = state.cart.totalCartPrice - (action.payload as ProductDto).price;
       }
     },
@@ -130,9 +144,9 @@ export const appData = createSlice({
           const currentStateReviewsIds = currentStateReviews.map((review) => review.id);
           const filteredReceivedReviews = currentReceivedReviews.filter((receivedReview) => !currentStateReviewsIds.includes(receivedReview.id));
           state.reviews.push(...filteredReceivedReviews);
-          state.dataLoadedStatus = false;
         }
         state.currentQueryReviewsCount = action.payload.length;
+        state.dataLoadedStatus = false;
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         const currentReceivedReviews = [action.payload];
@@ -147,9 +161,9 @@ export const appData = createSlice({
           const currentStateReviewsIds = currentStateReviews.map((review) => review.id);
           const filteredReceivedReviews = currentReceivedReviews.filter((receivedReview) => !currentStateReviewsIds.includes(receivedReview.id));
           state.reviews.unshift(...filteredReceivedReviews);
-          state.dataLoadedStatus = false;
         }
         state.currentQueryReviewsCount = currentReceivedReviews.length;
+        state.dataLoadedStatus = false;
       });
   }
 });

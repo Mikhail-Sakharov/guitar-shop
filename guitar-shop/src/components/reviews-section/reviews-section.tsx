@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchReviewsAction} from '../../store/api-actons';
+import {setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCurrentQueryReviewsCount, getReviews} from '../../store/app-data/selectors';
 import {useApppSelector} from '../app/app';
 import Review from '../review/review';
@@ -28,6 +29,7 @@ function ReviewsSection({currentReviewsPage, setCurrentReviewsPage, setProductPa
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   useEffect(() => {
+    dispatch(setDataLoadedStatus(true));
     dispatch(fetchReviewsAction({productId, page: currentReviewsPage}));
   }, [currentReviewsPage, dispatch, productId]);
 

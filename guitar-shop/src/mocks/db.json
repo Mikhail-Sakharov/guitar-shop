@@ -1359,19 +1359,6 @@
       "disadvantages": "Тугие колки",
       "text": "У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте нет чехла и ремня.",
       "rating": 3
-    },
-    {
-      "id": 1676128408002,
-      "createdAt": "2023-02-11T15:13:27.945Z",
-      "user": {
-        "firstName": "Михаил",
-        "lastName": "Сахаров"
-      },
-      "productId": 6703109901792,
-      "advantages": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-      "disadvantages": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-      "text": "54321",
-      "rating": 5
     }
   ],
   "users": [

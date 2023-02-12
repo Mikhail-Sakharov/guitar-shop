@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
+import {DEFAULT_PAGE_NUMBER, FILTER_QUERY_DELAY, PRODUCTS_LIMIT} from '../../const';
 import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductsAction} from '../../store/api-actons';
@@ -58,8 +58,8 @@ function Filter() {
     }));
   });
 
-  const setMinPriceDebounced = debounce((arg) => setMinPrice(arg), 1000);
-  const setMaxPriceDebounced = debounce((arg) => setMaxPrice(arg), 1000);
+  const setMinPriceDebounced = debounce((arg) => setMinPrice(arg), FILTER_QUERY_DELAY);
+  const setMaxPriceDebounced = debounce((arg) => setMaxPrice(arg), FILTER_QUERY_DELAY);
 
   const handleMinPriceInputChange = () => {
     setMinPriceDebounced(minPriceRef.current ? minPriceRef.current.value : '');
