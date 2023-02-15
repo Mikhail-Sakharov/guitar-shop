@@ -15,7 +15,8 @@ export enum AppRoute {
 
 export enum APIRoute {
   Products = '/products',
-  Reviews = '/reviews'
+  Reviews = '/reviews',
+  CheckAuth = '/auth/checkAuth'
 }
 
 export enum AuthorizationStatus {

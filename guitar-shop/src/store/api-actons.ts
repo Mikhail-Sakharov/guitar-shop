@@ -8,6 +8,17 @@ import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
 
+export const checkAuthAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/checkAuth',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.get(APIRoute.CheckAuth);
+  },
+);
+
 export const fetchProductsAction = createAsyncThunk<[ProductDto[], number, number, number], QueryArguments | undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -61,7 +72,7 @@ export const postCommentAction = createAsyncThunk<ReviewDto, CommentRequestBody,
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/postComment',
+  'data/postReview',
   async (commentRequestBody, {dispatch, extra: api}) => {
     const transformedReqBody = {
       id: Number(new Date()) * getRandom(0, 5) + getRandom(0, 99),
