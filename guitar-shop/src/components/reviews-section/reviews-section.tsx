@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchReviewsAction} from '../../store/api-actons';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCurrentQueryReviewsCount, getReviews} from '../../store/app-data/selectors';
-import {useApppSelector} from '../app/app';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import Review from '../review/review';
 
 type ProductPageState = {
@@ -25,7 +25,7 @@ function ReviewsSection({currentReviewsPage, setCurrentReviewsPage, setProductPa
 
   const productId = Number(useParams().id);
 
-  const authorizationStatus = useApppSelector();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   useEffect(() => {

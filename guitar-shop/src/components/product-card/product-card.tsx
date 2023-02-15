@@ -2,8 +2,8 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getCart} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {ProductDto} from '../../types/product.dto';
-import {useApppSelector} from '../app/app';
 
 type MainPageState = {
   isAddToCartModalOpened: boolean;
@@ -17,7 +17,7 @@ type ProductCardProps = {
 };
 
 function ProductCard({product, setMainPageState}: ProductCardProps) {
-  const authorizationStatus = useApppSelector();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const cart = useAppSelector(getCart);

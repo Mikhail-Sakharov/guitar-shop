@@ -2,10 +2,10 @@ import {Link} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getCart} from '../../store/app-data/selectors';
-import {useApppSelector} from '../app/app';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 function Header() {
-  const authorizationStatus = useApppSelector(); // временный фейковый селектор !
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const cart = useAppSelector(getCart);

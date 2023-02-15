@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {useApppSelector} from '../../components/app/app';
 import EnterModal from '../../components/modals/enter-modal/enter-modal';
 import SendReviewModal from '../../components/modals/modal-success-review/send-review-modal';
 import ReviewFormModal from '../../components/modals/review-form-modal/review-form-modal';
@@ -10,6 +9,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductAction} from '../../store/api-actons';
 import {putProductToCart, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCart, getProduct} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type ProductPageState = {
   isEnterModalOpened?: boolean;
@@ -23,7 +23,7 @@ function Product(): JSX.Element {
   const productId = Number(useParams().id);
   const product = useAppSelector(getProduct);
 
-  const authorizationStatus = useApppSelector();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const cart = useAppSelector(getCart);
