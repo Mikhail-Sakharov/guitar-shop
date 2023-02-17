@@ -13,6 +13,7 @@ import {saveToken} from '../services/token';
 import {redirectToRouteAction} from './redirect-action';
 import {LoginUserRequestBody} from '../types/login-user-request-body';
 import LoggedUserResponse from '../types/logged-user.response';
+import {saveUserName} from '../services/user-name';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -103,6 +104,7 @@ export const registerUserAction = createAsyncThunk<UserResponse, RegisterUserReq
   async (registerUserRequestBody, {dispatch, extra: api}) => {
     const {data} = await api.post<UserResponse>(APIRoute.Register, registerUserRequestBody);
     saveToken(data.token);
+    saveUserName(data.userName);
     dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   },
@@ -118,6 +120,7 @@ export const loginUserAction = createAsyncThunk<LoggedUserResponse, LoginUserReq
     console.log('loginUserAction');
     const {data} = await api.post<LoggedUserResponse>(APIRoute.Login, loginUserRequestBody);
     saveToken(data.token);
+    saveUserName(data.userName);
     dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   },

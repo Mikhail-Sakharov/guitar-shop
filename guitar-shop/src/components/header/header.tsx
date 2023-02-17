@@ -1,11 +1,13 @@
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
+import {getUserName} from '../../services/user-name';
 import {getCart} from '../../store/app-data/selectors';
-import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getAuthorizationStatus, getUserData} from '../../store/user-process/selectors';
 
 function Header() {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUserData);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const cart = useAppSelector(getCart);
@@ -31,7 +33,7 @@ function Header() {
             </ul>
           </nav>
           <div className="header__container">
-            <span className="header__user-name">Имя</span>
+            <span className="header__user-name">{isUserAuthorized && userData.userName}</span>
             <Link className="header__link" to="/cart" aria-label="Перейти в личный кабинет">
               <svg className="header__link-icon" width="12" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-account"></use>
