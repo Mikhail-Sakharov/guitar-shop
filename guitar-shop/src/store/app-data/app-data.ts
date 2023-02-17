@@ -3,7 +3,7 @@ import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
-import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction} from '../api-actons';
+import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction} from '../api-actions';
 
 type InitalState = {
   dataLoadedStatus: boolean;

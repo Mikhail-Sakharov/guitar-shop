@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {DEFAULT_PAGE_NUMBER, FILTER_QUERY_DELAY, PRODUCTS_LIMIT} from '../../const';
 import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductsAction} from '../../store/api-actons';
+import {fetchProductsAction} from '../../store/api-actions';
 import {changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getActivePage, getMaxPrice, getMinPrice, getSortOrder, getSortType} from '../../store/app-data/selectors';
 import {GuitarType, StringsCount} from '../../types/common';

@@ -1,6 +1,6 @@
 import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductsAction} from '../../store/api-actons';
+import {fetchProductsAction} from '../../store/api-actions';
 import {changeSortTypeAction, changeSortOrderAction, changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getSortType, getSortOrder} from '../../store/app-data/selectors';
 import {SortOrder, SortType} from '../../types/common';

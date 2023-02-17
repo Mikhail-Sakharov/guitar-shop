@@ -6,7 +6,7 @@ import ReviewFormModal from '../../components/modals/review-form-modal/review-fo
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import {AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductAction} from '../../store/api-actons';
+import {fetchProductAction} from '../../store/api-actions';
 import {putProductToCart, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCart, getProduct} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';

@@ -1,6 +1,6 @@
 import {FormEvent, useEffect, useState} from "react";
 import {useAppDispatch} from "../../hooks";
-import {registerUserAction} from "../../store/api-actons";
+import {registerUserAction} from "../../store/api-actions";
 import {setDataLoadedStatus} from "../../store/app-data/app-data";
 
 const emailRegExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

@@ -6,7 +6,7 @@ import browserHistory from './browser-history';
 import App from './components/app/app';
 import HistoryRouter from './components/history-router/history-router';
 import {store} from './store';
-import {checkAuthAction, fetchProductsAction} from './store/api-actons';
+import {checkAuthAction, fetchProductsAction} from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import {DEFAULT_PAGE_NUMBER, PRODUCTS_LIMIT} from './const';
 import {setDataLoadedStatus} from './store/app-data/app-data';

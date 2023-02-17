@@ -1,7 +1,7 @@
 import {useState, useEffect, FormEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
-import {loginUserAction} from '../../store/api-actons';
+import {loginUserAction} from '../../store/api-actions';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
 
 const emailRegExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

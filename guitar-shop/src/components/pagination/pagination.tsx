@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductsAction} from '../../store/api-actons';
+import {fetchProductsAction} from '../../store/api-actions';
 import {changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getActivePage, getPagesCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 

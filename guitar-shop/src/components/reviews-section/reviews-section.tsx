@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchReviewsAction} from '../../store/api-actons';
+import {fetchReviewsAction} from '../../store/api-actions';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
 import {getCurrentQueryReviewsCount, getReviews} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';

@@ -1,6 +1,6 @@
 import {FormEvent, useEffect, useState} from 'react';
 import {useAppDispatch} from '../../../hooks';
-import {postCommentAction} from '../../../store/api-actons';
+import {postCommentAction} from '../../../store/api-actions';
 import {setDataLoadedStatus} from '../../../store/app-data/app-data';
 import {ProductDto} from '../../../types/product.dto';
 
