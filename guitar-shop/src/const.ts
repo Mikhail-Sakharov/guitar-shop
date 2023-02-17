@@ -18,7 +18,7 @@ export enum APIRoute {
   Reviews = '/reviews',
   CheckAuth = '/users/checkAuth',
   Register = '/users/register',
-  Login = '/user/login'
+  Login = '/users/login'
 }
 
 export enum AuthorizationStatus {

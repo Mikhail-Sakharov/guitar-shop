@@ -10,8 +10,9 @@ import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
 import UserResponse from '../types/user.response';
 import {saveToken} from '../services/token';
-import {redirectToRouteAction} from './redirect-taction';
+import {redirectToRouteAction} from './redirect-action';
 import {LoginUserRequestBody} from '../types/login-user-request-body';
+import LoggedUserResponse from '../types/logged-user.response';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -94,9 +95,9 @@ export const postCommentAction = createAsyncThunk<ReviewDto, CommentRequestBody,
 );
 
 export const registerUserAction = createAsyncThunk<UserResponse, RegisterUserRequestBody, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
 }>(
   'user/register',
   async (registerUserRequestBody, {dispatch, extra: api}) => {
@@ -107,14 +108,15 @@ export const registerUserAction = createAsyncThunk<UserResponse, RegisterUserReq
   },
 );
 
-export const loginUserAction = createAsyncThunk<UserResponse, LoginUserRequestBody, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
+export const loginUserAction = createAsyncThunk<LoggedUserResponse, LoginUserRequestBody, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
 }>(
   'user/login',
   async (loginUserRequestBody, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserResponse>(APIRoute.Login, loginUserRequestBody);
+    console.log('loginUserAction');
+    const {data} = await api.post<LoggedUserResponse>(APIRoute.Login, loginUserRequestBody);
     saveToken(data.token);
     dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
