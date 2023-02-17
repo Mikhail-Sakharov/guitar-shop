@@ -8,7 +8,7 @@ export enum AppRoute {
   Cart = '/cart',
   AddItem = '/add-item',
   EditItem = '/edit-item',
-  Order = '/order/:id', // /order/:id
+  Order = '/order/:id',
   Orders = '/orders',
   NotFound = '*'
 }
@@ -16,7 +16,9 @@ export enum AppRoute {
 export enum APIRoute {
   Products = '/products',
   Reviews = '/reviews',
-  CheckAuth = '/auth/checkAuth'
+  CheckAuth = '/users/checkAuth',
+  Register = '/users/register',
+  Login = '/user/login'
 }
 
 export enum AuthorizationStatus {

@@ -1,12 +1,17 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {APIRoute} from '../const';
+import {APIRoute, AppRoute} from '../const';
 import {getQueryString, getRandom, getReviewsQueryString} from '../helpers';
 import {CommentRequestBody} from '../types/comment-request-body';
 import {GetReviewsQueryArguments, QueryArguments} from '../types/common';
+import {RegisterUserRequestBody} from '../types/register-user-request-body';
 import {ProductDto} from '../types/product.dto';
 import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
+import UserResponse from '../types/user.response';
+import {saveToken} from '../services/token';
+import {redirectToRouteAction} from './redirect-taction';
+import {LoginUserRequestBody} from '../types/login-user-request-body';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -84,6 +89,34 @@ export const postCommentAction = createAsyncThunk<ReviewDto, CommentRequestBody,
       ...commentRequestBody
     };
     const {data} = await api.post<ReviewDto>(APIRoute.Reviews, transformedReqBody);
+    return data;
+  },
+);
+
+export const registerUserAction = createAsyncThunk<UserResponse, RegisterUserRequestBody, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/register',
+  async (registerUserRequestBody, {dispatch, extra: api}) => {
+    const {data} = await api.post<UserResponse>(APIRoute.Register, registerUserRequestBody);
+    saveToken(data.token);
+    dispatch(redirectToRouteAction(AppRoute.Main));
+    return data;
+  },
+);
+
+export const loginUserAction = createAsyncThunk<UserResponse, LoginUserRequestBody, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/login',
+  async (loginUserRequestBody, {dispatch, extra: api}) => {
+    const {data} = await api.post<UserResponse>(APIRoute.Login, loginUserRequestBody);
+    saveToken(data.token);
+    dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   },
 );

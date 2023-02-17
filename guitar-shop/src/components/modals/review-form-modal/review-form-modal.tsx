@@ -27,9 +27,9 @@ function ReviewFormModal({product, setProductPageState}: ReviewFormModalProps): 
   const [commentInputUsed, setCommentInputUsed] = useState(false);
 
   const [ratingError, setRatingError] = useState('Поставьте оценку');
-  const [advantagesError, setAdvantagesError] = useState('Поле обязательно к заполнению');
-  const [disadvantagesError, setDisadvantagesError] = useState('Поле обязательно к заполнению');
-  const [commentError, setCommentError] = useState('Поле обязательно к заполнению');
+  const [advantagesError, setAdvantagesError] = useState('Заполните поле');
+  const [disadvantagesError, setDisadvantagesError] = useState('Заполните поле');
+  const [commentError, setCommentError] = useState('Заполните поле');
 
   const [formValid, setFormValid] = useState(true);
 

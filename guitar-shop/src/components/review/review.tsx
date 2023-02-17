@@ -10,7 +10,7 @@ function Review({review}: ReviewProps): JSX.Element {
   return (
     <div className="review">
       <div className="review__wrapper">
-        <h4 className="review__title review__title--author title title--lesser">{`${review.user.lastName} ${review.user.firstName}`}</h4>
+        <h4 className="review__title review__title--author title title--lesser">{review.user.userName}</h4>
         <span className="review__date">{humanizeDate(review.createdAt)}</span>
       </div>
       <div className="rate review__rating-panel">
