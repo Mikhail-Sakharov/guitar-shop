@@ -1,5 +1,5 @@
 export type CommentRequestBody = {
-  productId: number;
+  productId: string;
   advantages: string;
   disadvantages: string;
   text: string;

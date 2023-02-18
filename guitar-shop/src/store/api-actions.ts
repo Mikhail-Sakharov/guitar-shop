@@ -51,7 +51,7 @@ export const fetchProductsAction = createAsyncThunk<[ProductDto[], number, numbe
   },
 );
 
-export const fetchProductAction = createAsyncThunk<ProductDto, number, {
+export const fetchProductAction = createAsyncThunk<ProductDto, string | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

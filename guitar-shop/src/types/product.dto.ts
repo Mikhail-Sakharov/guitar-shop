@@ -1,5 +1,5 @@
 export class ProductDto {
-  public id!: number;
+  public id!: string;
   public createdAt!: string;
   public authorId!: string;
   public title!: string;

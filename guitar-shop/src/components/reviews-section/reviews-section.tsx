@@ -23,7 +23,7 @@ function ReviewsSection({currentReviewsPage, setCurrentReviewsPage, setProductPa
   const reviews = useAppSelector(getReviews);
   const currentQueryReviewsCount = useAppSelector(getCurrentQueryReviewsCount);
 
-  const productId = Number(useParams().id);
+  const productId = useParams().id;
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;

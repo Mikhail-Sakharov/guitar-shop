@@ -20,7 +20,7 @@ type ProductPageState = {
 function Product(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const productId = Number(useParams().id);
+  const productId = useParams().id;
   const product = useAppSelector(getProduct);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -69,7 +69,7 @@ function Product(): JSX.Element {
           </li>
         </ul>
         <div className="product-container">
-          <img className="product-container__img" src={product ? `../${product?.image}` : ''} /* srcSet={product ? `${product?.image} 2x` : ''} */ width="90" height="235" alt={product?.title}/>
+          <img className="product-container__img" src={product ? `${product?.image}` : ''} /* srcSet={product ? `${product?.image} 2x` : ''} */ width="90" height="235" alt={product?.title}/>
           <div className="product-container__info-wrapper">
             <h2 className="product-container__title title title--big title--uppercase">{product?.title}</h2>
             <div className="rate product-container__rating">

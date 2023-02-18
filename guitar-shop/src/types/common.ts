@@ -22,7 +22,7 @@ export type QueryArguments = {
 };
 
 export type GetReviewsQueryArguments = {
-  productId: number;
+  productId: string | undefined;
   page?: number;
   limit?: number;
   sort?: SortType;
