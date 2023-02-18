@@ -38,7 +38,7 @@ function Catalog({setMainPageState}: CatalogProps): JSX.Element {
         )
         : (
           products.map((product) => (
-            <ul className="catalog-cards__list">
+            <ul key={product.id} className="catalog-cards__list">
               <AdminProductCard product={product}/>
             </ul>
           ))
