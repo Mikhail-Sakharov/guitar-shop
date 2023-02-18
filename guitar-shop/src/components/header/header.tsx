@@ -2,18 +2,23 @@ import {Link} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getUserName} from '../../services/user-name';
+import {getUserRole} from '../../services/user-role';
 import {getCart} from '../../store/app-data/selectors';
-import {getAuthorizationStatus, getUserData} from '../../store/user-process/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {UserRole} from '../../types/user-role.enum';
+import AdminNavMenu from '../admin-nav-menu/admin-nav-menu';
+import UserNavMenu from '../user-nav-menu/user-nav-menu';
 
 function Header() {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const userData = useAppSelector(getUserData);
+
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+  const isUserAdmin = getUserRole() === UserRole.Admin;
 
   const cart = useAppSelector(getCart);
 
   return (
-    <header className={`header ${isUserAuthorized ? 'header--logged' : ''}`} id="header">
+    <header className={`header ${isUserAuthorized ? 'header--logged' : ''} ${isUserAdmin ? 'header--admin' : ''}`} id="header">
       <div className="container">
         <div className="header__wrapper">
           <Link to="/" className="header__logo logo">
@@ -21,19 +26,19 @@ function Header() {
           </Link>
           <nav className="main-nav">
             <ul className="main-nav__list">
-              <li className="main-nav__item">
-                <Link className="link main-nav__link link--current" to="/">Каталог</Link>
-              </li>
-              <li className="main-nav__item">
-                <Link className="link main-nav__link" to="#">Где купить?</Link>
-              </li>
-              <li className="main-nav__item">
-                <Link className="link main-nav__link" to="#">О компании</Link>
-              </li>
+              {
+                isUserAdmin
+                  ? (
+                    <AdminNavMenu />
+                  )
+                  : (
+                    <UserNavMenu />
+                  )
+              }
             </ul>
           </nav>
           <div className="header__container">
-            <span className="header__user-name">{isUserAuthorized && userData.userName}</span>
+            <span className="header__user-name">{isUserAuthorized && getUserName()}</span>
             <Link className="header__link" to="/cart" aria-label="Перейти в личный кабинет">
               <svg className="header__link-icon" width="12" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-account"></use>

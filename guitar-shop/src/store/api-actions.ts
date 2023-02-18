@@ -14,6 +14,7 @@ import {redirectToRouteAction} from './redirect-action';
 import {LoginUserRequestBody} from '../types/login-user-request-body';
 import LoggedUserResponse from '../types/logged-user.response';
 import {saveUserName} from '../services/user-name';
+import {saveUserRole} from '../services/user-role';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -117,10 +118,10 @@ export const loginUserAction = createAsyncThunk<LoggedUserResponse, LoginUserReq
 }>(
   'user/login',
   async (loginUserRequestBody, {dispatch, extra: api}) => {
-    console.log('loginUserAction');
     const {data} = await api.post<LoggedUserResponse>(APIRoute.Login, loginUserRequestBody);
     saveToken(data.token);
     saveUserName(data.userName);
+    saveUserRole(data.userRole);
     dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   },

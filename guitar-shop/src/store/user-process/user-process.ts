@@ -4,21 +4,11 @@ import {UserRole} from "../../types/user-role.enum";
 import {checkAuthAction, loginUserAction, registerUserAction} from "../api-actions";
 
 type UserProcess = {
-  authorizationStatus: AuthorizationStatus,
-  userData: {
-    userName: string | null;
-    email: string | null;
-    userRole: UserRole | null;
-  }
+  authorizationStatus: AuthorizationStatus
 };
 
 const initialState: UserProcess = {
-  authorizationStatus: AuthorizationStatus.Unknown,
-  userData: {
-    userName: null,
-    email: null,
-    userRole: null
-  }
+  authorizationStatus: AuthorizationStatus.Unknown
 };
 
 export const userProcess = createSlice({
@@ -27,7 +17,7 @@ export const userProcess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(registerUserAction.fulfilled, (state) => {
+      .addCase(registerUserAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(registerUserAction.rejected, (state) => {
@@ -40,9 +30,6 @@ export const userProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
       .addCase(loginUserAction.fulfilled, (state, action) => {
-        const userData = JSON.parse(JSON.stringify(action.payload));
-        delete userData.token;
-        state.userData = userData;
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(loginUserAction.rejected, (state) => {

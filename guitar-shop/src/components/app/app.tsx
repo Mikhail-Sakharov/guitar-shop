@@ -12,12 +12,15 @@ import Orders from '../../pages/orders/orders';
 import ProductList from '../../pages/product-list/product-list';
 import Product from '../../pages/product/product';
 import Registration from '../../pages/registration/registration';
+import {getUserRole} from '../../services/user-role';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import AdminRoute from '../admin-route/admin-route';
 import Layout from '../layout/layout';
 import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userRole = getUserRole();
 
   return (
     <Routes>
@@ -33,14 +36,9 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Registration}
-          element={
-            authorizationStatus !== AuthorizationStatus.Auth
-              ? <Registration />
-              : <Navigate to={AppRoute.Main}/>
-          }
+          element={<Registration />}
         />
         <Route path={AppRoute.ProductId} element={<Product />}/>
-        <Route path={AppRoute.Products} element={<ProductList />}/>
         <Route
           path={AppRoute.Cart}
           element={
@@ -49,10 +47,48 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.AddItem} element={<AddItem />}/>
-        <Route path={AppRoute.EditItem} element={<EditItem />}/>
-        <Route path={AppRoute.Order} element={<Order />}/>
-        <Route path={AppRoute.Orders} element={<Orders />}/>
+
+        <Route
+          path={AppRoute.Products}
+          element={
+            <AdminRoute userRole={userRole}>
+              <ProductList />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={AppRoute.AddItem}
+          element={
+            <AdminRoute userRole={userRole}>
+              <AddItem />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={AppRoute.EditItem}
+          element={
+            <AdminRoute userRole={userRole}>
+              <EditItem />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Order}
+          element={
+            <AdminRoute userRole={userRole}>
+              <Order />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Orders}
+          element={
+            <AdminRoute userRole={userRole}>
+              <Orders />
+            </AdminRoute>
+          }
+        />
+
         <Route path={AppRoute.NotFound} element={<NotFound />}/>
       </Route>
     </Routes>
