@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {AppRoute, AuthorizationStatus, MAX_RATING_STARS_COUNT, PRODUCT_IMAGE_PATH_REG_EXP, ratings} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getCart} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
@@ -13,7 +13,7 @@ type MainPageState = {
 
 type ProductCardProps = {
   product: ProductDto;
-  setMainPageState: (state: MainPageState) => void;
+  setMainPageState?: (state: MainPageState) => void;
 };
 
 function ProductCard({product, setMainPageState}: ProductCardProps) {
@@ -26,7 +26,7 @@ function ProductCard({product, setMainPageState}: ProductCardProps) {
 
   return (
     <div className="product-card">
-      <img src={product.image} /* srcSet={product ? `${product?.image} 2x` : ''} */ width="75" height="190" alt={product.title}/>
+      <img src={product.image} srcSet={`${product.image.match(PRODUCT_IMAGE_PATH_REG_EXP)}@2x.png 2x`} width="75" height="190" alt={product.title}/>
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {
@@ -56,7 +56,7 @@ function ProductCard({product, setMainPageState}: ProductCardProps) {
                 to=""
                 className="button button--red button--mini button--add-to-cart"
                 onClick={
-                  () => setMainPageState({
+                  () => setMainPageState && setMainPageState({
                     isAddToCartModalOpened: isUserAuthorized,
                     isEnterModalOpened: !isUserAuthorized,
                     product: isUserAuthorized ? product : null

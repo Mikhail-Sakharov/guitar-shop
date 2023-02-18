@@ -1,11 +1,9 @@
 import {useState, useEffect, FormEvent} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, EMAIL_REG_EXP} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {loginUserAction} from '../../store/api-actions';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
-
-const emailRegExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -44,7 +42,7 @@ function Login(): JSX.Element {
   const handleEmailInputChange = (evt: FormEvent<HTMLInputElement>) => {
     const value = evt.currentTarget.value;
     setEmail(value);
-    if (!emailRegExp.test(value)) {
+    if (!EMAIL_REG_EXP.test(value)) {
       setEmailError('Введите валидный email');
       if (!value) {
         setEmailError('Заполните поле');

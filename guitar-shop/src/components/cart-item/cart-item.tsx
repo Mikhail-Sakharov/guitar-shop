@@ -1,3 +1,4 @@
+import {PRODUCT_IMAGE_PATH_REG_EXP} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {decreaseCartItemQuantity, deleteProductFromCart, increaseCartItemQuantity} from '../../store/app-data/app-data';
 import {CartItemType} from '../../types/common';
@@ -28,7 +29,10 @@ function CartItem({cartItem}: CartItemProps): JSX.Element {
         <span className="cart-item__close-button-interactive-area"></span>
       </button>
       <div className="cart-item__image">
-        <img src={cartItem.product ? `${cartItem.product?.image}` : ''} srcSet="img/content/catalog-product-1@2x.png 2x" width="55" height="130" alt="ЭлектроГитара Честер bass"/>
+        <img
+          src={cartItem.product ? `${cartItem.product?.image}` : ''}
+          srcSet={`${cartItem.product?.image.match(PRODUCT_IMAGE_PATH_REG_EXP)}@2x.png 2x`}
+          width="55" height="130" alt="ЭлектроГитара Честер bass"/>
       </div>
       <div className="product-info cart-item__info">
         <p className="product-info__title">ЭлектроГитара {cartItem.product?.title}</p>

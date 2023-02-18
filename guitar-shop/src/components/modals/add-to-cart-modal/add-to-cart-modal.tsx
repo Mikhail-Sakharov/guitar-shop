@@ -1,3 +1,4 @@
+import {PRODUCT_IMAGE_PATH_REG_EXP} from '../../../const';
 import {useAppDispatch} from '../../../hooks';
 import {putProductToCart} from '../../../store/app-data/app-data';
 import {ProductDto} from '../../../types/product.dto';
@@ -30,7 +31,11 @@ function AddToCartModal({product, setMainPageState}: AddToCartModalProps): JSX.E
           <div className="modal__content">
             <h2 className="modal__header title title--medium">Добавить товар в корзину</h2>
             <div className="modal__info">
-              <img className="modal__img" src={product?.image} srcSet="img/content/catalog-product-1@2x.png 2x" width="67" height="137" alt={product?.title}/>
+              <img
+                className="modal__img"
+                src={product?.image}
+                srcSet={`${product?.image.match(PRODUCT_IMAGE_PATH_REG_EXP)}@2x.png 2x`}
+                width="67" height="137" alt={product?.title}/>
               <div className="modal__info-wrapper">
                 <h3 className="modal__product-name title title--little title--uppercase">Гитара {product?.title}</h3>
                 <p className="modal__product-params modal__product-params--margin-11">Артикул: {product?.sku}</p>

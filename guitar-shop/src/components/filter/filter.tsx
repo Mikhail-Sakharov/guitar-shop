@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import {DEFAULT_PAGE_NUMBER, FILTER_QUERY_DELAY, PRODUCTS_LIMIT} from '../../const';
 import {debounce} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -9,6 +10,7 @@ import {GuitarType, StringsCount} from '../../types/common';
 
 function Filter() {
   const dispatch = useAppDispatch();
+  const currentPath = useLocation().pathname;
 
   const activePage = useAppSelector(getActivePage);
   const sortType = useAppSelector(getSortType);
@@ -124,29 +126,34 @@ function Filter() {
   return (
     <form className="catalog-filter">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
-      <fieldset className="catalog-filter__block">
-        <legend className="catalog-filter__block-title">Цена, ₽</legend>
-        <div className="catalog-filter__price-range">
-          <div className="form-input">
-            <label className="visually-hidden">Минимальная цена</label>
-            <input
-              ref={minPriceRef}
-              pattern="^[1-9]{1}[0-9]{2,5}&"
-              type="number" placeholder={`${minCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMin" name="от"
-              onChange={handleMinPriceInputChange}
-            />
-          </div>
-          <div className="form-input">
-            <label className="visually-hidden">Максимальная цена</label>
-            <input
-              ref={maxPriceRef}
-              pattern="^[1-9]{1}[0-9]{2,5}&"
-              type="number" placeholder={`${maxCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMax" name="до"
-              onChange={handleMaxPriceInputChange}
-            />
-          </div>
-        </div>
-      </fieldset>
+      {
+        currentPath === '/'
+          && (
+            <fieldset className="catalog-filter__block">
+              <legend className="catalog-filter__block-title">Цена, ₽</legend>
+              <div className="catalog-filter__price-range">
+                <div className="form-input">
+                  <label className="visually-hidden">Минимальная цена</label>
+                  <input
+                    ref={minPriceRef}
+                    pattern="^[1-9]{1}[0-9]{2,5}&"
+                    type="number" placeholder={`${minCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMin" name="от"
+                    onChange={handleMinPriceInputChange}
+                  />
+                </div>
+                <div className="form-input">
+                  <label className="visually-hidden">Максимальная цена</label>
+                  <input
+                    ref={maxPriceRef}
+                    pattern="^[1-9]{1}[0-9]{2,5}&"
+                    type="number" placeholder={`${maxCurrentCatalogPrice.toLocaleString()} ₽`} id="priceMax" name="до"
+                    onChange={handleMaxPriceInputChange}
+                  />
+                </div>
+              </div>
+            </fieldset>
+          )
+      }
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         <div className="form-checkbox catalog-filter__block-item">
