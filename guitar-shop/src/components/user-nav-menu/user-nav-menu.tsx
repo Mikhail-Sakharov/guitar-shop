@@ -15,7 +15,7 @@ function UserNavMenu() {
       </li>
       <li className="main-nav__item">
         <Link
-          className={`link main-nav__link ${currentPath === '/' ? 'link--current' : ''}`}
+          className={`link main-nav__link ${currentPath === '/whereToBuy' ? 'link--current' : ''}`}
           to="#"
         >
           Где купить?
@@ -23,7 +23,7 @@ function UserNavMenu() {
       </li>
       <li className="main-nav__item">
         <Link
-          className={`link main-nav__link ${currentPath === '/' ? 'link--current' : ''}`}
+          className={`link main-nav__link ${currentPath === '/about' ? 'link--current' : ''}`}
           to="#"
         >
           О компании

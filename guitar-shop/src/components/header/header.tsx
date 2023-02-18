@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getUserName} from '../../services/user-name';
@@ -10,6 +10,7 @@ import AdminNavMenu from '../admin-nav-menu/admin-nav-menu';
 import UserNavMenu from '../user-nav-menu/user-nav-menu';
 
 function Header() {
+  const currentPath = useLocation().pathname;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
@@ -39,13 +40,19 @@ function Header() {
           </nav>
           <div className="header__container">
             <span className="header__user-name">{isUserAuthorized && getUserName()}</span>
-            <Link className="header__link" to="/cart" aria-label="Перейти в личный кабинет">
+            <Link
+              className={`header__link ${currentPath === '/cart' ? 'link--current' : ''}`}
+              to="/cart" aria-label="Перейти в личный кабинет"
+            >
               <svg className="header__link-icon" width="12" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-account"></use>
               </svg>
               <span className="header__link-text">Вход</span>
             </Link>
-            <Link className="header__cart-link" to="/cart" aria-label="Перейти в корзину">
+            <Link
+              className={`header__cart-link ${currentPath === '/cart' ? 'link--current' : ''}`}
+              to="/cart" aria-label="Перейти в корзину"
+            >
               <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-basket"></use>
               </svg>

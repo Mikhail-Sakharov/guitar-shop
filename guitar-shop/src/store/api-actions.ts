@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {APIRoute, AppRoute} from '../const';
+import {APIRoute} from '../const';
 import {getQueryString, getRandom, getReviewsQueryString} from '../helpers';
 import {CommentRequestBody} from '../types/comment-request-body';
 import {GetReviewsQueryArguments, QueryArguments} from '../types/common';
@@ -10,7 +10,6 @@ import {ReviewDto} from '../types/review.dto';
 import {AppDispatch, State} from '../types/state';
 import UserResponse from '../types/user.response';
 import {saveToken} from '../services/token';
-import {redirectToRouteAction} from './redirect-action';
 import {LoginUserRequestBody} from '../types/login-user-request-body';
 import LoggedUserResponse from '../types/logged-user.response';
 import {saveUserName} from '../services/user-name';
@@ -106,7 +105,7 @@ export const registerUserAction = createAsyncThunk<UserResponse, RegisterUserReq
     const {data} = await api.post<UserResponse>(APIRoute.Register, registerUserRequestBody);
     saveToken(data.token);
     saveUserName(data.userName);
-    dispatch(redirectToRouteAction(AppRoute.Main));
+    saveUserRole(data.userRole);
     return data;
   },
 );
@@ -122,7 +121,6 @@ export const loginUserAction = createAsyncThunk<LoggedUserResponse, LoginUserReq
     saveToken(data.token);
     saveUserName(data.userName);
     saveUserRole(data.userRole);
-    dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   },
 );

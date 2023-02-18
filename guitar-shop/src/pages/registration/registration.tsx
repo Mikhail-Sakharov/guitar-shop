@@ -1,4 +1,6 @@
 import {FormEvent, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {AppRoute} from "../../const";
 import {useAppDispatch} from "../../hooks";
 import {registerUserAction} from "../../store/api-actions";
 import {setDataLoadedStatus} from "../../store/app-data/app-data";
@@ -7,6 +9,7 @@ const emailRegExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 function Registration(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -92,6 +95,7 @@ function Registration(): JSX.Element {
         email,
         password
       }));
+      navigate(AppRoute.Main);
     }
     setUserNameInputUsed(true);
     setEmailInputUsed(true);

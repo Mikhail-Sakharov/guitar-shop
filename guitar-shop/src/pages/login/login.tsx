@@ -1,5 +1,6 @@
 import {useState, useEffect, FormEvent} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {loginUserAction} from '../../store/api-actions';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
@@ -8,6 +9,7 @@ const emailRegExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -73,6 +75,7 @@ function Login(): JSX.Element {
         email,
         password
       }));
+      navigate(AppRoute.Main);
     }
     setEmailInputUsed(true);
     setPasswordInputUsed(true);
