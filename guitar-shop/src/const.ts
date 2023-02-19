@@ -41,6 +41,8 @@ export const DEFAULT_PAGE_NUMBER = 1;
 
 export const PRODUCTS_LIMIT = 9;
 
+export const ORDERS_LIMIT = 9;
+
 export const FILTER_QUERY_DELAY = 1000;
 
 export const EMAIL_REG_EXP = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

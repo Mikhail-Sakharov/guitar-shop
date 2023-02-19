@@ -139,40 +139,21 @@ export const postOrderAction = createAsyncThunk<OrderResponse, CreateOrderDto, {
   },
 );
 
-export const fetchOrdersAction = createAsyncThunk<OrderResponse[], QueryArguments, {
+export const fetchOrdersAction = createAsyncThunk<[OrderResponse[], number], QueryArguments, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchOrders',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.post<OrderResponse[]>(`${APIRoute.Orders}/${_arg}`);
-    return data;
+    const {data} = await api.get<OrderResponse[]>(`${APIRoute.Orders}${_arg ? getQueryString(_arg) : ''}`);
+
+    // запрос с теми же параметрами, но без лимита и номера страницы для формирования пагинации
+    const orders = await api.get<OrderResponse[]>(
+      `${APIRoute.Products}${getQueryString({..._arg, page: undefined, limit: undefined})}`
+    );
+    const ordersCount = orders.data.length;
+
+    return [data, ordersCount];
   },
 );
-
-/* {
-  "id": "63f26557309688cf76e4825b",
-  "createdAt": "2023-02-19T18:07:19.853Z",
-  "orderNumber": "57-328-322",
-  "items": [
-    {
-      "productId": "63f1103012f60ca02937e575",
-      "quantity": 3,
-      "totalOrderPrice": 1782420
-    },
-    {
-      "productId": "63f1103012f60ca02937e57f",
-      "quantity": 2,
-      "totalOrderPrice": 1200358
-    }
-  ],
-  "user": {
-    "id": "63f1103012f60ca02937e579",
-    "createdAt": "2023-02-18T17:51:44.789Z",
-    "email": "asd@asd.asd",
-    "userName": "zxvcbn",
-    "userRole": "User"
-  },
-  "totalOrderPrice": 2982778
-} */

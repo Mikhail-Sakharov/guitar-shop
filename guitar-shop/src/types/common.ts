@@ -1,6 +1,8 @@
 import {ProductDto} from './product.dto';
 
 export enum SortType {
+  TotalOrderPrice = 'totalOrderPrice',
+  Date = 'createdAt',
   Price = 'price',
   Rating = 'rating'
 }

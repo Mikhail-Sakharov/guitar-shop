@@ -1,9 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
+import {OrderResponse} from '../../types/order.response';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
-import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction, postOrderAction} from '../api-actions';
+import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction, postOrderAction, fetchOrdersAction} from '../api-actions';
 
 type InitalState = {
   dataLoadedStatus: boolean;
@@ -11,6 +12,10 @@ type InitalState = {
   productsCount: number;
   activePage: number;
   pagesCount: number;
+  orders: OrderResponse[];
+  ordersCount: number;
+  activeOrdersPage: number;
+  ordersPagesCount: number;
   sortType: SortType;
   sortOrder: SortOrder;
   minPrice: number;
@@ -27,6 +32,10 @@ const initialState: InitalState = {
   productsCount: 0,
   activePage: DEFAULT_PAGE_NUMBER,
   pagesCount: 0,
+  orders: [],
+  ordersCount: 0,
+  activeOrdersPage: DEFAULT_PAGE_NUMBER,
+  ordersPagesCount: 0,
   sortType: SortType.Price,
   sortOrder: SortOrder.Asc,
   minPrice: 100,
@@ -169,6 +178,16 @@ export const appData = createSlice({
         state.dataLoadedStatus = false;
       })
       .addCase(postOrderAction.fulfilled, (state) => {
+        state.dataLoadedStatus = false;
+      })
+      .addCase(fetchOrdersAction.fulfilled, (state, action) => {
+        const currentQueryPagesCount = Math.ceil(action.payload[1] / PRODUCTS_LIMIT);
+        state.ordersPagesCount = currentQueryPagesCount;
+        if (state.activeOrdersPage > currentQueryPagesCount) {
+          state.activeOrdersPage = currentQueryPagesCount;
+        }
+        state.orders = action.payload[0];
+        state.ordersCount = action.payload[1];
         state.dataLoadedStatus = false;
       });
   }

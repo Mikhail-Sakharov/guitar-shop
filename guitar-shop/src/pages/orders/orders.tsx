@@ -1,6 +1,25 @@
-import { Link } from 'react-router-dom';
+import {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import OrderCard from '../../components/order-card/order-card';
+import Pagination from '../../components/pagination/pagination';
+import Sort from '../../components/sort/sort';
+import {DEFAULT_PAGE_NUMBER, ORDERS_LIMIT} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchOrdersAction} from '../../store/api-actions';
+import {changeSortOrderAction, changeSortTypeAction} from '../../store/app-data/app-data';
+import {getOrders} from '../../store/app-data/selectors';
+import {SortOrder, SortType} from '../../types/common';
 
 function Orders(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector(getOrders);
+
+  useEffect(() => {
+    dispatch(fetchOrdersAction({page: DEFAULT_PAGE_NUMBER, limit: ORDERS_LIMIT, sort: SortType.Date}));
+    dispatch(changeSortTypeAction(SortType.Date));
+    dispatch(changeSortOrderAction(SortOrder.Asc));
+  }, []);
+
   return (
     <main className="page-content orders__main">
       <section className="orders">
@@ -14,77 +33,15 @@ function Orders(): JSX.Element {
               <Link className="link" to="/orders"> Заказы</Link>
             </li>
           </ul>
-          <div className="catalog-sort">
-            <h2 className="catalog-sort__title">Сортировать:</h2>
-            <div className="catalog-sort__type">
-              <button className="catalog-sort__type-button catalog-sort__type-button--active" aria-label="по дате">по дате</button>
-              <button className="catalog-sort__type-button" aria-label="по цене">по цене</button>
-            </div>
-            <div className="catalog-sort__order">
-              <button className="catalog-sort__order-button catalog-sort__order-button--up" aria-label="По возрастанию"></button>
-              <button className="catalog-sort__order-button catalog-sort__order-button--down" aria-label="По убыванию"></button>
-            </div>
-          </div>
+          <Sort />
           <ul className="orders__list">
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
-            <li className="orders__item">
-              <h3 className="orders__number">Заказ №00-000-000</h3>
-              <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">4</b></span>
-              <span className="orders__date">13.09.2022</span>
-              <b className="orders__sum">35 000<span className="orders__rouble">₽</span></b>
-              <button className="button button--small orders__remove-button" type="button">Удалить</button>
-            </li>
+            {
+              orders.map((order) => (
+                <OrderCard key={order.id} order={order}/>
+              ))
+            }
           </ul>
-          <div className="pagination orders__pagination">
-            <ul className="pagination__list">
-              <li className="pagination__page pagination__page--active">
-                <Link className="link pagination__page-link" to="1">1</Link>
-              </li>
-              <li className="pagination__page">
-                <Link className="link pagination__page-link" to="2">2</Link>
-              </li>
-              <li className="pagination__page">
-                <Link className="link pagination__page-link" to="3">3</Link>
-              </li>
-              <li className="pagination__page pagination__page--next" id="next">
-                <Link className="link pagination__page-link" to="2">Далее</Link>
-              </li>
-            </ul>
-          </div>
+          <Pagination />
         </div>
       </section>
     </main>

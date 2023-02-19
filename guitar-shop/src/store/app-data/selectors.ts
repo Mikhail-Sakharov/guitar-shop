@@ -1,5 +1,6 @@
 import {NameSpace} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
+import {OrderResponse} from '../../types/order.response';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
 import {State} from '../../types/state';
@@ -20,3 +21,8 @@ export const getPagesCount = (state: State): number => state[NameSpace.Data].pag
 export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].dataLoadedStatus;
 
 export const getCart = (state: State): CartType => state[NameSpace.Data].cart;
+
+export const getOrders = (state: State): OrderResponse[] => state[NameSpace.Data].orders;
+export const getOrdersCount = (state: State): number => state[NameSpace.Data].ordersCount;
+export const getActiveOrdersPage = (state: State): number => state[NameSpace.Data].activeOrdersPage;
+export const getOrdersPagesCount = (state: State): number => state[NameSpace.Data].ordersPagesCount;
