@@ -3,7 +3,7 @@ import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
-import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction} from '../api-actions';
+import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction, postOrderAction} from '../api-actions';
 
 type InitalState = {
   dataLoadedStatus: boolean;
@@ -55,6 +55,9 @@ export const appData = createSlice({
     },
     setDataLoadedStatus: (state, action) => {
       state.dataLoadedStatus = action.payload as boolean;
+    },
+    clearCart: (state, action) => {
+      state.cart = action.payload;
     },
     putProductToCart: (state, action) => {
       state.cart.items.push({
@@ -164,6 +167,9 @@ export const appData = createSlice({
         }
         state.currentQueryReviewsCount = currentReceivedReviews.length;
         state.dataLoadedStatus = false;
+      })
+      .addCase(postOrderAction.fulfilled, (state) => {
+        state.dataLoadedStatus = false;
       });
   }
 });
@@ -173,6 +179,7 @@ export const {
   changeSortOrderAction,
   changeActivePageAction,
   setDataLoadedStatus,
+  clearCart,
   putProductToCart,
   deleteProductFromCart,
   increaseCartItemQuantity,
