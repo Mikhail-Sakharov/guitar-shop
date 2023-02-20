@@ -8,7 +8,8 @@ export enum AppRoute {
   Cart = '/cart',
   AddItem = '/add-item',
   EditItem = '/edit-item',
-  Order = '/order/:id',
+  Order = '/order',
+  OrderId = '/order/:id',
   Orders = '/orders',
   NotFound = '*'
 }

@@ -1,11 +1,27 @@
-import { Link } from 'react-router-dom';
+import {useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import OrderItem from '../../components/order-item/order-item';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchOrderAction} from '../../store/api-actions';
+import {setDataLoadedStatus} from '../../store/app-data/app-data';
+import {getOrder} from '../../store/app-data/selectors';
 
 function Order(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const orderId = useParams().id;
+  const order = useAppSelector(getOrder);
+
+  useEffect(() => {
+    dispatch(setDataLoadedStatus(true));
+    dispatch(fetchOrderAction(orderId));
+  }, [dispatch, orderId]);
+
   return (
     <main className="page-content">
       <section className="order">
         <div className="container">
-          <h1 className="order__title">Заказ № 00-000-000</h1>
+          <h1 className="order__title">Заказ № {order?.orderNumber}</h1>
           <ul className="breadcrumbs">
             <li className="breadcrumbs__item">
               <Link className="link" to="/">Каталог</Link>
@@ -14,70 +30,33 @@ function Order(): JSX.Element {
               <Link className="link" to="/orders"> Заказы</Link>
             </li>
             <li className="breadcrumbs__item">
-              <Link className="link" to="/order/:id">Заказ № 00-000-000</Link>
+              <Link className="link" to="/order/:id">Заказ № {order?.orderNumber}</Link>
             </li>
           </ul>
           <table className="order-table">
             <tbody>
               <tr>
                 <td>Общее количество товаров</td>
-                <td>4</td>
+                <td>{order?.items.length}</td>
               </tr>
               <tr>
                 <td>Дата заказа</td>
-                <td>13.09.2022</td>
+                <td>{order?.createdAt}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <td>К оплате</td>
-                <td>70 000 <span>₽</span></td>
+                <td>{order?.totalOrderPrice} <span>₽</span></td>
               </tr>
             </tfoot>
           </table>
           <ul className="order__list order-list">
-            <li className="order-list__item">
-              <div className="order-list__data">
-                <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="60" height="130" alt="Картинка гитары"/>
-                <div className="order-list__container">
-                  <p className="order-list__name">ЭлектроГитара Честер bass</p>
-                  <p className="order-list__lot">Артикул: SO757575</p>
-                  <p className="order-list__parameters">Электрогитара, 6 струнная</p>
-                </div>
-              </div>
-              <span className="order-list__quantity">1</span><span className="order-list__price">17 500 ₽</span>
-              <button className="order-list__button button-cross" type="button" aria-label="Закрыть">
-                <span className="button-cross__icon"></span>
-              </button>
-            </li>
-            <li className="order-list__item">
-              <div className="order-list__data">
-                <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="60" height="130" alt="Картинка гитары"/>
-                <div className="order-list__container">
-                  <p className="order-list__name">ЭлектроГитара Честер bass</p>
-                  <p className="order-list__lot">Артикул: SO757575</p>
-                  <p className="order-list__parameters">Электрогитара, 6 струнная</p>
-                </div>
-              </div>
-              <span className="order-list__quantity">2</span><span className="order-list__price">35 000 ₽</span>
-              <button className="order-list__button button-cross" type="button" aria-label="Закрыть">
-                <span className="button-cross__icon"></span>
-              </button>
-            </li>
-            <li className="order-list__item">
-              <div className="order-list__data">
-                <img src="img/content/catalog-product-1.png" srcSet="img/content/catalog-product-1@2x.png 2x" width="60" height="130" alt="Картинка гитары"/>
-                <div className="order-list__container">
-                  <p className="order-list__name">ЭлектроГитара Честер bass</p>
-                  <p className="order-list__lot">Артикул: SO757575</p>
-                  <p className="order-list__parameters">Электрогитара, 6 струнная</p>
-                </div>
-              </div>
-              <span className="order-list__quantity">1</span><span className="order-list__price">17 500 ₽</span>
-              <button className="order-list__button button-cross" type="button" aria-label="Закрыть">
-                <span className="button-cross__icon"></span>
-              </button>
-            </li>
+            {
+              order?.items.map((orderItem) => (
+                <OrderItem orderItem={orderItem}/>
+              ))
+            }
           </ul>
           <button className="button order__button button--small button--black-border">Вернуться к списку заказов</button>
         </div>

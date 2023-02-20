@@ -1,4 +1,3 @@
-import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import {DEFAULT_PAGE_NUMBER, ORDERS_LIMIT, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';

@@ -4,7 +4,7 @@ import {SortType, SortOrder, CartType} from '../../types/common';
 import {OrderResponse} from '../../types/order.response';
 import {ProductDto} from '../../types/product.dto';
 import {ReviewDto} from '../../types/review.dto';
-import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction, postOrderAction, fetchOrdersAction} from '../api-actions';
+import {fetchReviewsAction, fetchProductAction, fetchProductsAction, postCommentAction, postOrderAction, fetchOrdersAction, fetchOrderAction} from '../api-actions';
 
 type InitalState = {
   dataLoadedStatus: boolean;
@@ -21,6 +21,7 @@ type InitalState = {
   minPrice: number;
   maxPrice: number;
   product: ProductDto | null;
+  order: OrderResponse | null;
   reviews: ReviewDto[];
   currentQueryReviewsCount: number;
   cart: CartType;
@@ -41,6 +42,7 @@ const initialState: InitalState = {
   minPrice: 100,
   maxPrice: 1000000,
   product: null,
+  order: null,
   reviews: [],
   currentQueryReviewsCount: 0,
   cart: {
@@ -191,6 +193,10 @@ export const appData = createSlice({
         }
         state.orders = action.payload[0];
         state.ordersCount = action.payload[1];
+        state.dataLoadedStatus = false;
+      })
+      .addCase(fetchOrderAction.fulfilled, (state, action) => {
+        state.order = action.payload;
         state.dataLoadedStatus = false;
       });
   }

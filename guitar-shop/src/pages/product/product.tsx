@@ -4,7 +4,7 @@ import EnterModal from '../../components/modals/enter-modal/enter-modal';
 import SendReviewModal from '../../components/modals/modal-success-review/send-review-modal';
 import ReviewFormModal from '../../components/modals/review-form-modal/review-form-modal';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
-import {AuthorizationStatus, MAX_RATING_STARS_COUNT, ratings} from '../../const';
+import {AuthorizationStatus, DEFAULT_PAGE_NUMBER, MAX_RATING_STARS_COUNT, ratings} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchProductAction} from '../../store/api-actions';
 import {putProductToCart, setDataLoadedStatus} from '../../store/app-data/app-data';
@@ -37,7 +37,7 @@ function Product(): JSX.Element {
     isSendReviewModalOpened: false
   };
   const [productPageState, setProductPageState] = useState(productPageInitialState);
-  const [currentReviewsPage, setCurrentReviewsPage] = useState(1);
+  const [currentReviewsPage, setCurrentReviewsPage] = useState(DEFAULT_PAGE_NUMBER);
 
   useEffect(() => {
     dispatch(setDataLoadedStatus(true));

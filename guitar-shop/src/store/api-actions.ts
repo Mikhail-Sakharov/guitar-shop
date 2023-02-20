@@ -168,3 +168,15 @@ export const deleteOrderAction = createAsyncThunk<void, string, {
     await api.delete(`${APIRoute.Orders}/${_arg}`);
   },
 );
+
+export const fetchOrderAction = createAsyncThunk<OrderResponse, string | undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOrder',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OrderResponse>(`${APIRoute.Orders}/${_arg}`);
+    return data;
+  },
+);

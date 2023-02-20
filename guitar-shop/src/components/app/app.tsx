@@ -73,7 +73,7 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Order}
+          path={AppRoute.OrderId}
           element={
             <AdminRoute userRole={userRole}>
               <Order />

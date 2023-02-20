@@ -26,3 +26,4 @@ export const getOrders = (state: State): OrderResponse[] => state[NameSpace.Data
 export const getOrdersCount = (state: State): number => state[NameSpace.Data].ordersCount;
 export const getActiveOrdersPage = (state: State): number => state[NameSpace.Data].activeOrdersPage;
 export const getOrdersPagesCount = (state: State): number => state[NameSpace.Data].ordersPagesCount;
+export const getOrder = (state: State): OrderResponse | null => state[NameSpace.Data].order;
