@@ -52,7 +52,7 @@ function Sort() {
             )
         }
         <button
-          className={`catalog-sort__type-button ${sortType === SortType.Price ? 'catalog-sort__type-button--active' : ''}`} aria-label="по цене"
+          className={`catalog-sort__type-button ${sortType === SortType.Price || sortType === SortType.TotalOrderPrice ? 'catalog-sort__type-button--active' : ''}`} aria-label="по цене"
           onClick={() => handleSortTypeClick(currentPath === '/orders' ? SortType.TotalOrderPrice : SortType.Price)}
         >
           по цене

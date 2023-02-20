@@ -6,7 +6,7 @@ import Sort from '../../components/sort/sort';
 import {DEFAULT_PAGE_NUMBER, ORDERS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchOrdersAction} from '../../store/api-actions';
-import {changeSortOrderAction, changeSortTypeAction} from '../../store/app-data/app-data';
+import {changeActiveOrdersPageAction, changeSortOrderAction, changeSortTypeAction} from '../../store/app-data/app-data';
 import {getOrders} from '../../store/app-data/selectors';
 import {SortOrder, SortType} from '../../types/common';
 
@@ -18,6 +18,7 @@ function Orders(): JSX.Element {
     dispatch(fetchOrdersAction({page: DEFAULT_PAGE_NUMBER, limit: ORDERS_LIMIT, sort: SortType.Date}));
     dispatch(changeSortTypeAction(SortType.Date));
     dispatch(changeSortOrderAction(SortOrder.Asc));
+    dispatch(changeActiveOrdersPageAction(DEFAULT_PAGE_NUMBER));
   }, []);
 
   return (
