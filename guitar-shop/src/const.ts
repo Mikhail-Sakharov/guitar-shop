@@ -41,7 +41,7 @@ export const DEFAULT_PAGE_NUMBER = 1;
 
 export const PRODUCTS_LIMIT = 9;
 
-export const ORDERS_LIMIT = 9;
+export const ORDERS_LIMIT = 6;
 
 export const FILTER_QUERY_DELAY = 1000;
 

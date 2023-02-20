@@ -150,7 +150,7 @@ export const fetchOrdersAction = createAsyncThunk<[OrderResponse[], number], Que
 
     // запрос с теми же параметрами, но без лимита и номера страницы для формирования пагинации
     const orders = await api.get<OrderResponse[]>(
-      `${APIRoute.Products}${getQueryString({..._arg, page: undefined, limit: undefined})}`
+      `${APIRoute.Orders}${getQueryString({..._arg, page: undefined, limit: undefined})}`
     );
     const ordersCount = orders.data.length;
 

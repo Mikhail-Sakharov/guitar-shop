@@ -1,38 +1,54 @@
-import {Link} from 'react-router-dom';
-import {PRODUCTS_LIMIT} from '../../const';
+import {Link, useLocation} from 'react-router-dom';
+import {ORDERS_LIMIT, PRODUCTS_LIMIT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchProductsAction} from '../../store/api-actions';
-import {changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
-import {getActivePage, getPagesCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
+import {fetchOrdersAction, fetchProductsAction} from '../../store/api-actions';
+import {changeActiveOrdersPageAction, changeActivePageAction, setDataLoadedStatus} from '../../store/app-data/app-data';
+import {getActiveOrdersPage, getActivePage, getOrdersPagesCount, getPagesCount, getSortOrder, getSortType} from '../../store/app-data/selectors';
 
 const MAX_PAGES_COUNT = 3;
 
 function Pagination() {
   const dispatch = useAppDispatch();
+  const currentPath = useLocation().pathname;
 
   const sortType = useAppSelector(getSortType);
   const sortOrder = useAppSelector(getSortOrder);
-  const activePage = useAppSelector(getActivePage);
+  const activePage = currentPath === '/orders' ? useAppSelector(getActiveOrdersPage) : useAppSelector(getActivePage);
 
-  const pagesCount = useAppSelector(getPagesCount);
+  const pagesCount = currentPath === '/orders' ? useAppSelector(getOrdersPagesCount) : useAppSelector(getPagesCount);
   const displayedPagesQueue = Math.floor((activePage - 0.5) / MAX_PAGES_COUNT);
 
   const handlePrevClick = () => {
     dispatch(setDataLoadedStatus(true));
-    dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    dispatch(changeActivePageAction(activePage - 1));
+    if (currentPath === '/orders') {
+      dispatch(fetchOrdersAction({page: activePage - 1, limit: ORDERS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActiveOrdersPageAction(activePage - 1));
+    } else {
+      dispatch(fetchProductsAction({page: activePage - 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActivePageAction(activePage - 1));
+    }
   };
 
   const handlePageClick = (pageNumber: number) => {
     dispatch(setDataLoadedStatus(true));
-    dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    dispatch(changeActivePageAction(pageNumber));
+    if (currentPath === '/orders') {
+      dispatch(fetchOrdersAction({page: pageNumber, limit: ORDERS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActiveOrdersPageAction(pageNumber));
+    } else {
+      dispatch(fetchProductsAction({page: pageNumber, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActivePageAction(pageNumber));
+    }
   };
 
   const handleNextClick = () => {
     dispatch(setDataLoadedStatus(true));
-    dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
-    dispatch(changeActivePageAction(activePage + 1));
+    if (currentPath === '/orders') {
+      dispatch(fetchOrdersAction({page: activePage + 1, limit: ORDERS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActiveOrdersPageAction(activePage + 1));
+    } else {
+      dispatch(fetchProductsAction({page: activePage + 1, limit: PRODUCTS_LIMIT, sort: sortType, order: sortOrder}));
+      dispatch(changeActivePageAction(activePage + 1));
+    }
   };
 
   return (

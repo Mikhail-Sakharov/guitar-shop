@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_PAGE_NUMBER, NameSpace, PRODUCTS_LIMIT} from '../../const';
+import {DEFAULT_PAGE_NUMBER, NameSpace, ORDERS_LIMIT, PRODUCTS_LIMIT} from '../../const';
 import {SortType, SortOrder, CartType} from '../../types/common';
 import {OrderResponse} from '../../types/order.response';
 import {ProductDto} from '../../types/product.dto';
@@ -61,6 +61,9 @@ export const appData = createSlice({
     },
     changeActivePageAction: (state, action) => {
       state.activePage = action.payload as number;
+    },
+    changeActiveOrdersPageAction: (state, action) => {
+      state.activeOrdersPage = action.payload as number;
     },
     setDataLoadedStatus: (state, action) => {
       state.dataLoadedStatus = action.payload as boolean;
@@ -181,7 +184,7 @@ export const appData = createSlice({
         state.dataLoadedStatus = false;
       })
       .addCase(fetchOrdersAction.fulfilled, (state, action) => {
-        const currentQueryPagesCount = Math.ceil(action.payload[1] / PRODUCTS_LIMIT);
+        const currentQueryPagesCount = Math.ceil(action.payload[1] / ORDERS_LIMIT);
         state.ordersPagesCount = currentQueryPagesCount;
         if (state.activeOrdersPage > currentQueryPagesCount) {
           state.activeOrdersPage = currentQueryPagesCount;
@@ -197,6 +200,7 @@ export const {
   changeSortTypeAction,
   changeSortOrderAction,
   changeActivePageAction,
+  changeActiveOrdersPageAction,
   setDataLoadedStatus,
   clearCart,
   putProductToCart,
