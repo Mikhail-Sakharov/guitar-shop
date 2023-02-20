@@ -6,14 +6,15 @@ import {OrderResponse} from '../../types/order.response';
 
 type OrderCardProps = {
   order: OrderResponse;
+  refreshPage: () => void;
 };
 
-function OrderCard({order}: OrderCardProps): JSX.Element {
+function OrderCard({order, refreshPage}: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleDeleteButtonClick = () => {
-    dispatch(deleteOrderAction(order.id));
-    dispatch(fetchOrdersAction({page: DEFAULT_PAGE_NUMBER, limit: ORDERS_LIMIT, sort: SortType.Date}));
+  const handleDeleteButtonClick = async () => {
+    await dispatch(deleteOrderAction(order.id));
+    refreshPage();
   };
 
   return (

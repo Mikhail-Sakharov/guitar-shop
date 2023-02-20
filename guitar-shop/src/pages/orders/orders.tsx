@@ -14,11 +14,15 @@ function Orders(): JSX.Element {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(getOrders);
 
-  useEffect(() => {
+  const refreshOrdersPage = () => {
     dispatch(fetchOrdersAction({page: DEFAULT_PAGE_NUMBER, limit: ORDERS_LIMIT, sort: SortType.Date}));
     dispatch(changeSortTypeAction(SortType.Date));
     dispatch(changeSortOrderAction(SortOrder.Asc));
     dispatch(changeActiveOrdersPageAction(DEFAULT_PAGE_NUMBER));
+  };
+
+  useEffect(() => {
+    refreshOrdersPage();
   }, []);
 
   return (
@@ -38,7 +42,10 @@ function Orders(): JSX.Element {
           <ul className="orders__list">
             {
               orders.map((order) => (
-                <OrderCard key={order.id} order={order}/>
+                <OrderCard key={order.id}
+                  order={order}
+                  refreshPage={refreshOrdersPage}
+                />
               ))
             }
           </ul>
