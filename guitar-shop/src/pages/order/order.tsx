@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid';
 import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import OrderItem from '../../components/order-item/order-item';
@@ -11,6 +12,7 @@ function Order(): JSX.Element {
 
   const orderId = useParams().id;
   const order = useAppSelector(getOrder);
+  const totalOrderProductsCount = order?.items.reduce((res, item) => res + item.quantity, 0);
 
   useEffect(() => {
     dispatch(setDataLoadedStatus(true));
@@ -37,7 +39,7 @@ function Order(): JSX.Element {
             <tbody>
               <tr>
                 <td>Общее количество товаров</td>
-                <td>{order?.items.length}</td>
+                <td>{totalOrderProductsCount}</td>
               </tr>
               <tr>
                 <td>Дата заказа</td>
@@ -54,7 +56,7 @@ function Order(): JSX.Element {
           <ul className="order__list order-list">
             {
               order?.items.map((orderItem) => (
-                <OrderItem orderItem={orderItem}/>
+                <OrderItem key={nanoid()} orderItem={orderItem}/>
               ))
             }
           </ul>

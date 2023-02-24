@@ -6,6 +6,7 @@ type OrderItemProps = {
 };
 
 function OrderItem({orderItem}: OrderItemProps): JSX.Element {
+
   return (
     <li className="order-list__item">
       <div className="order-list__data">

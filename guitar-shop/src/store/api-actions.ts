@@ -139,6 +139,7 @@ export const postOrderAction = createAsyncThunk<OrderResponse, CreateOrderDto, {
   },
 );
 
+// исправить тип возращаемого результата OrderResponse
 export const fetchOrdersAction = createAsyncThunk<[OrderResponse[], number], QueryArguments, {
   dispatch: AppDispatch;
   state: State;

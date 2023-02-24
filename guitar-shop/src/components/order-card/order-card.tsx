@@ -13,6 +13,8 @@ function OrderCard({order, refreshPage}: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const totalOrderProductsCount = order.items.reduce((res, item) => res + item.quantity, 0);
+
   const handleDeleteButtonClick = async () => {
     await dispatch(deleteOrderAction(order.id));
     refreshPage();
@@ -27,7 +29,7 @@ function OrderCard({order, refreshPage}: OrderCardProps): JSX.Element {
       >
         Заказ №{order.orderNumber}
       </h3>
-      <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">{order.items.length}</b></span>
+      <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">{totalOrderProductsCount}</b></span>
       <span className="orders__date">{order.createdAt}</span>
       <b className="orders__sum">{order.totalOrderPrice.toLocaleString()}<span className="orders__rouble">₽</span></b>
       <button
