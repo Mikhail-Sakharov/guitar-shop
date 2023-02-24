@@ -25,6 +25,14 @@ export function humanizeDate(date: string): string {
   return `${date[8]}${date[9]} ${monthNames[Number(`${date[5]}${date[6]}`) - 1]}`;
 }
 
+export const getOrdersHumanizedDate = (date: string) => {
+  const day = `${date[8]}${date[9]}`;
+  const month = `${date[5]}${date[6]}`;
+  const year = `${date[0]}${date[1]}${date[2]}${date[3]}`;
+  const orderHumanizedDate = `${day}.${month}.${year}`;
+  return orderHumanizedDate;
+};
+
 export const getQueryString = (args: QueryArguments | undefined) => {
   if (!args) {return '';}
   const queryParams = [

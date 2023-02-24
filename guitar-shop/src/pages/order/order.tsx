@@ -2,6 +2,7 @@ import {nanoid} from 'nanoid';
 import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import OrderItem from '../../components/order-item/order-item';
+import {getOrdersHumanizedDate} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchOrderAction} from '../../store/api-actions';
 import {setDataLoadedStatus} from '../../store/app-data/app-data';
@@ -43,7 +44,7 @@ function Order(): JSX.Element {
               </tr>
               <tr>
                 <td>Дата заказа</td>
-                <td>{order?.createdAt}</td>
+                <td>{order ? getOrdersHumanizedDate(order?.createdAt) : ''}</td>
               </tr>
             </tbody>
             <tfoot>

@@ -1,5 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {getOrdersHumanizedDate} from '../../helpers';
 import {useAppDispatch} from '../../hooks';
 import {deleteOrderAction} from '../../store/api-actions';
 import {OrderResponse} from '../../types/order.response';
@@ -30,7 +31,7 @@ function OrderCard({order, refreshPage}: OrderCardProps): JSX.Element {
         Заказ №{order.orderNumber}
       </h3>
       <span className="orders__items">товаров&nbsp;<b className="orders__items-qty">{totalOrderProductsCount}</b></span>
-      <span className="orders__date">{order.createdAt}</span>
+      <span className="orders__date">{getOrdersHumanizedDate(order.createdAt)}</span>
       <b className="orders__sum">{order.totalOrderPrice.toLocaleString()}<span className="orders__rouble">₽</span></b>
       <button
         onClick={handleDeleteButtonClick}
