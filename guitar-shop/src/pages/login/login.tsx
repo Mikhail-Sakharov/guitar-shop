@@ -1,4 +1,4 @@
-import {useState, useEffect, FormEvent} from 'react';
+import {useState, useEffect, FormEvent, useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, EMAIL_REG_EXP} from '../../const';
 import {useAppDispatch} from '../../hooks';
@@ -8,6 +8,8 @@ import {setDataLoadedStatus} from '../../store/app-data/app-data';
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,6 +80,20 @@ function Login(): JSX.Element {
     setEmailInputUsed(true);
     setPasswordInputUsed(true);
   };
+
+  const togglePasswordInputType = () => {
+    if (passwordInputRef.current) {
+      switch(passwordInputRef.current.type) {
+        case 'password':
+          passwordInputRef.current.type = 'text';
+          break;
+        case 'text':
+          passwordInputRef.current.type = 'password';
+          break;
+      }
+    }
+  };
+
   return (
     <main className="page-content">
       <div className="container">
@@ -99,12 +115,13 @@ function Login(): JSX.Element {
               <label htmlFor="passwordLogin">Введите пароль</label>
               <span>
                 <input
+                  ref={passwordInputRef}
                   onChange={handlePasswordInputChange}
                   value={password}
                   onFocus={handleInputFocus}
                   type="password" placeholder="• • • • • • • • • • • •" id="passwordLogin" name="password" autoComplete="off"
                 />
-                <button className="input-login__button-eye" type="button">
+                <button onClick={togglePasswordInputType} className="input-login__button-eye" type="button">
                   <svg width="14" height="8" aria-hidden="true">
                     <use xlinkHref="#icon-eye"></use>
                   </svg>

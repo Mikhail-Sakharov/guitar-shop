@@ -1,7 +1,8 @@
 import {nanoid} from 'nanoid';
 import {useEffect} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import OrderItem from '../../components/order-item/order-item';
+import {AppRoute} from '../../const';
 import {getOrdersHumanizedDate} from '../../helpers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchOrderAction} from '../../store/api-actions';
@@ -10,6 +11,7 @@ import {getOrder} from '../../store/app-data/selectors';
 
 function Order(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const orderId = useParams().id;
   const order = useAppSelector(getOrder);
@@ -50,7 +52,7 @@ function Order(): JSX.Element {
             <tfoot>
               <tr>
                 <td>К оплате</td>
-                <td>{order?.totalOrderPrice} <span>₽</span></td>
+                <td>{order?.totalOrderPrice.toLocaleString()} <span>₽</span></td>
               </tr>
             </tfoot>
           </table>
@@ -61,7 +63,12 @@ function Order(): JSX.Element {
               ))
             }
           </ul>
-          <button className="button order__button button--small button--black-border">Вернуться к списку заказов</button>
+          <button
+            onClick={() => navigate(AppRoute.Orders)}
+            className="button order__button button--small button--black-border"
+          >
+            Вернуться к списку заказов
+          </button>
         </div>
       </section>
     </main>

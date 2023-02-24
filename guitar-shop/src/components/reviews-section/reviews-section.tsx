@@ -66,12 +66,17 @@ function ReviewsSection({currentReviewsPage, setCurrentReviewsPage, setProductPa
             </button>
           )
       }
-      <Link
-        onClick={() => window.scrollTo(0, 0)}
-        className="button button--up button--red-border button--big reviews__up-button" to="#header"
-      >
-        Наверх
-      </Link>
+      {
+        currentQueryReviewsCount !== 0
+          && (
+            <Link
+              onClick={() => window.scrollTo(0, 0)}
+              className="button button--up button--red-border button--big reviews__up-button" to="#header"
+            >
+              Наверх
+            </Link>
+          )
+      }
     </section>
   );
 }
