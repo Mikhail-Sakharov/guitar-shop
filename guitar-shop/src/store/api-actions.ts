@@ -16,6 +16,7 @@ import {saveUserName} from '../services/user-name';
 import {saveUserRole} from '../services/user-role';
 import {OrderResponse} from '../types/order.response';
 import CreateOrderDto from '../types/create-order.dto';
+import CreateProductDto from '../types/create-product.dto';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -178,6 +179,19 @@ export const fetchOrderAction = createAsyncThunk<OrderResponse, string | undefin
   'data/fetchOrder',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OrderResponse>(`${APIRoute.Orders}/${_arg}`);
+    return data;
+  },
+);
+
+export const createProductAction = createAsyncThunk<ProductDto, CreateProductDto, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/createProduct',
+  async (createProductRequestBody, {dispatch, extra: api}) => {
+    const {data} = await api.post<ProductDto>(APIRoute.Products, createProductRequestBody);
+    console.log(data);
     return data;
   },
 );

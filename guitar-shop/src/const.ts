@@ -49,3 +49,11 @@ export const FILTER_QUERY_DELAY = 1000;
 export const EMAIL_REG_EXP = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export const PRODUCT_IMAGE_PATH_REG_EXP = /.+(?=.png)/;
+
+export const MIN_PRICE = 100;
+
+export const MAX_PRICE = 1000000;
+
+export const PRICE_VALUE_REG_EXP = /^[0-9]*$/;
+
+export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
